@@ -1,2 +1,2 @@
 # password_manager
-Git repository to maintain python codebase for password management utility
+Git repository to maintain python code-base for password management utility
