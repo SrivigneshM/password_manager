@@ -21,4 +21,4 @@ $ python3 app.py
 
 ## Steps to invoke flask app
 
-Open the home page html file in browser (/password_manager/home.html)
+Invoke the URL from browser http://localhost:5000/
