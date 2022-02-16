@@ -5,22 +5,22 @@ function adjust_textarea(h) {
     h.style.height = (h.scrollHeight)+"px";
 }
 
-// function submit_form(){
-//     $(document).on('submit', '#password_form', function() {
-// 	$.post("http://localhost:5000/password", $(this).serialize(), function(response){
-// 	    window.alert(response)
-// 	},'json');
-// 	return false;
-//     });
-// }
 
-$(document).ready(function(){
-    var $form = $('form');
-    $form.submit(function(){
-	$.post("http://localhost:5000/password", $(this).serialize(), function(response){
-	    console.log(response)
-	},'json');
-	return false;
+$('form').submit(function (event) {
+    event.preventDefault()
+    $.ajax({
+        url: "http://localhost:5000/password",
+	data: $(this).serialize(),
+        type: "POST",
+        dataType: "html",
+        success: function (data) {
+	    $('#showresults').val(data);
+        },
+        error: function (xhr, status) {
+            alert("Sorry, there was a problem!");
+        },
+        complete: function (xhr, status) {
+            //$('#showresults').slideDown('slow')
+        }
     });
 });
-

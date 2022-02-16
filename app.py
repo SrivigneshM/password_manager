@@ -17,7 +17,6 @@ def home():
 def login():
    if request.method == 'POST':
       password = request.form['field4']
-      # return redirect(url_for('print',value = password))
       return "Saved password: " + password
 
 

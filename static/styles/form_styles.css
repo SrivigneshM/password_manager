@@ -12,14 +12,13 @@
 
 }
 .form-style-8 h2{
-	background: #4D4D4D;
+	background: #34CACA;
 	text-transform: uppercase;
 	font-family: 'Open Sans Condensed', sans-serif;
-	color: #797979;
-	font-size: 18px;
-	font-weight: 100;
-	padding: 20px;
-	margin: -30px -30px 30px -30px;
+	color: #000000;
+	font-size: 24px;
+	font-weight: 250;
+	padding: 25px;
 }
 .form-style-8 input[type="text"],
 .form-style-8 input[type="date"],
