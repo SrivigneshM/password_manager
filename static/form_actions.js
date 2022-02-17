@@ -15,6 +15,8 @@ $('form').submit(function (event) {
         dataType: "html",
         success: function (data) {
 	    $('#showresults').val(data);
+	    var result = document.getElementById('showresults');
+	    result.style.color = "#006400";
         },
         error: function (xhr, status) {
             alert("Sorry, there was a problem!");
