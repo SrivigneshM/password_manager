@@ -1,11 +1,14 @@
 # password_manager
 Git repository to maintain python code-base for password management utility
 
-## Pre-requisites:
+## Software recommended:
 
-Python 3.7.7
+| Software                                                       | Version |
+|----------------------------------------------------------------|---------|
+| [Python](https://docs.python-guide.org/starting/install3/osx/) | 3.7.7   |
+| [sqlite](https://www.sqlite.org/download.html)                 | 3.28.0  |
 
-## Steps to setup virtual environment for development
+## Setup virtual environment for development
 
 ```sh
 $ python3 -m venv ENV
@@ -13,12 +16,23 @@ $ . ENV/bin/activate
 $ ./ENV/bin/pip3.7 install -r requirements.txt
 ```
 
-## Steps to run flask app
+## Run flask app
 
 ```sh
 $ python3 app.py
 ```
 
-## Steps to invoke flask app
+## Invoke flask app
 
 Invoke the URL from browser http://localhost:5000/
+
+## Create and open database
+
+```sh
+$ sqlite3
+$ sqlite3 password_manager.db
+$ .open ./password_manager.db
+$ .mode column
+$ .header on
+```
+DB design: click [here](DML.md)
