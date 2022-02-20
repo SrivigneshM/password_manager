@@ -9,7 +9,7 @@ function adjust_textarea(h) {
 $('form').submit(function (event) {
     event.preventDefault()
     $.ajax({
-        url: "http://localhost:5000/password",
+        url: "http://localhost:5000/signup",
 	data: $(this).serialize(),
         type: "POST",
         dataType: "html",
