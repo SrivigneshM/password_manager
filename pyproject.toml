@@ -1,10 +1,13 @@
 [tool.vulture]
-exclude = ["ENV/"]
+exclude = ["ENV/", "tests/"]
 min_confidence = 70
 paths = ["."]
 
 [tool.black]
-line-length=99
+line-length=79
 
 [tool.isort]
 profile = "black"
+
+[tool.pylint.format]
+extend-ignore = "E203"
