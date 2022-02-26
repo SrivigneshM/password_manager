@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/form_styles.css') }}">
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+  </head>
+   <body>
+     <div class="form-style-8">
+       <h2>Signup page</h2>
+
+       <form action="" id="password_form">
+
+	     <input type="text" name="name" placeholder="User Name" />
+	     <input type="email" name="email" placeholder="Email" />
+	     <input type="text" name="mobile" placeholder="Mobile" />
+	     <!-- <input type="url" name="field3" placeholder="Website URL" /> -->
+	     <input type ="password" name="password" placeholder="Password" />
+	     <!-- <textarea placeholder="Remarks" onkeyup="adjust_textarea(this)"></textarea> -->
+	     <input type="submit" value="submit" placeholder="Save"/>
+	     <input type ="text" id="showresults" placeholder="Result" readonly>
+
+       </form>
+
+    <script src="{{ url_for('static',filename='form_actions.js') }}"> </script>
+   </body>
+</html>

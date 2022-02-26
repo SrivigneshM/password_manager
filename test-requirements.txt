@@ -1,0 +1,10 @@
+black==20.8b1
+flake8-functions==0.0.4
+flake8==3.8.4
+isort==5.7.0
+pre-commit==2.10.1
+vulture==2.1
+
+pytest==6.2.1
+oslo.concurrency==4.0.0
+pytest-mock==3.5.1
