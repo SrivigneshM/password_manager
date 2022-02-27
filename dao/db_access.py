@@ -54,3 +54,45 @@ def create_actor(conn, actor):
         repr(e)
 
     return actor_id
+
+
+def create_profile(conn, profile):
+    """
+    Create a new profile into the profile table
+    :param conn:
+    :param profile:
+    :return: profile_id
+    """
+    profile_id = -1
+    try:
+        sql = """ INSERT INTO profile(actor_id, app_name, user_id, user_name,
+                  password, password_expiry, crn, profile_password, url,
+                  is_active, customer_care_number, remarks)
+                  VALUES(?,?,?,?,?,?,?,?,?,?,?,?) """
+        cur = conn.cursor()
+        cur.execute(sql, profile)
+        conn.commit()
+        profile_id = cur.lastrowid
+    except Error as e:
+        repr(e)
+
+    return profile_id
+
+
+def validate_actor(conn, name, password):
+    """
+    Query actor by name
+    :param conn: the Connection object
+    :param name: actor name
+    :param password: actor password
+    :return: id
+    """
+    cur = conn.cursor()
+    cur.execute("SELECT id, password FROM actor WHERE name=?", (name,))
+
+    rows = cur.fetchall()
+
+    for row in rows:
+        if row[1] == password:
+            return row[0]
+    return -1
