@@ -8,9 +8,7 @@ from utils.constants import project_root
 
 @pytest.fixture()
 def create_actor_table(mocker):
-    mocker.patch.object(
-        db_access, "db_file", Path(f"{project_root}/test_password_manager.db")
-    )
+    mocker.patch.object(db_access, "db_file", Path(f"{project_root}/test_password_manager.db"))
 
     sql_create_actor_table = """CREATE TABLE actor(
                                    id INTEGER PRIMARY KEY AUTOINCREMENT,
