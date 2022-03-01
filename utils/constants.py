@@ -42,6 +42,7 @@ class Singleton(type):
 class Messages:
     SIGNUP_SUCCESS = "Successfully signed up: "
     SIGNUP_FAILED = "Unable to signup: "
+    SIGNUP_NAME_TAKEN = "Name is already taken: "
     ADD_PROFILE_SUCCESS = "Successfully added details for: "
     ADD_PROFILE_FAILED = "Unable to add details for: "
     ACTOR_VALIDATION_FAILED = "User name or password incorrect/ mismatched"

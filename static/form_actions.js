@@ -19,7 +19,9 @@ $('form').submit(function (event) {
 	    result.style.color = "#006400";
         },
         error: function (xhr, status) {
-            alert("Sorry, there was a problem!");
+	    $('#showresults').val(xhr.responseText);
+	    var result = document.getElementById('showresults');
+	    result.style.color = "#FF0000";
         },
         complete: function (xhr, status) {
             //$('#showresults').slideDown('slow')
