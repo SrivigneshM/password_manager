@@ -96,3 +96,52 @@ def validate_actor(conn, name, password=None):
         if (password is None) or row[1] == password:
             return row[0]
     return -1
+
+
+def validate_profile(conn, actor_id, app_name):
+    """
+    Query profile by app_name and actor_id
+    :param conn: the Connection object
+    :param actor_id: actor id
+    :param app_name: app name
+    :return: id
+    """
+    cur = conn.cursor()
+    cur.execute("SELECT id FROM profile WHERE actor_id=? and app_name=?", (actor_id, app_name))
+
+    row = cur.fetchone()
+    id = row[0] if row else -1
+
+    return id
+
+
+def read_profile(conn, actor_id, app_name):
+    """
+    Query profile by app_name and actor_id
+    :param conn: the Connection object
+    :param actor_id: actor id
+    :param app_name: app name
+    :return: profile_dict
+    """
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM profile WHERE actor_id=? and app_name=?", (actor_id, app_name))
+
+    row = cur.fetchone()
+    profile = row if row else None
+
+    profile_dict = {
+        "id": profile[0],
+        "actor_id": profile[1],
+        "app_name": profile[2],
+        "user_id": profile[3],
+        "user_name": profile[4],
+        "password": profile[5],
+        "password_expiry": profile[6],
+        "crn": profile[7],
+        "profile_password": profile[8],
+        "url": profile[9],
+        "is_active": profile[10],
+        "customer_care_number": profile[11],
+        "remarks": profile[12],
+    }
+    return profile_dict

@@ -1,6 +1,14 @@
-from flask import Blueprint, request
+import json
 
-from dao.db_access import Connection, create_profile, validate_actor
+from flask import Blueprint, Response, request
+
+from dao.db_access import (
+    Connection,
+    create_profile,
+    read_profile,
+    validate_actor,
+    validate_profile,
+)
 from utils.constants import Messages, Profile
 
 api_blueprint = Blueprint("profile_api", __name__)
@@ -27,6 +35,9 @@ def add_profile():
     if actor_id < 0:
         message = f"{Messages.ACTOR_VALIDATION_FAILED}!"
         response_code = 400
+    elif validate_profile(Connection(), actor_id, app_name) > 0:
+        message = f"{Messages.ADD_PROFILE_NAME_TAKEN}{app_name}!"
+        response_code = 400
     else:
         profile = Profile(
             actor_id,
@@ -48,3 +59,18 @@ def add_profile():
             message = f"{Messages.ADD_PROFILE_FAILED}{app_name}!"
             response_code = 400
     return message, response_code
+
+
+@api_blueprint.route("/read_profile", methods=["GET"])
+def get_profile():
+    actor_name = request.form.get("actor_name", None)
+    actor_password = request.form.get("actor_password", None)
+    app_name = request.form.get("app_name", None)
+    actor_id = validate_actor(Connection(), actor_name, actor_password)
+    if actor_id < 0:
+        payload = {"message": f"{Messages.ACTOR_VALIDATION_FAILED}!"}
+        resp = Response(json.dumps(payload), status=400, mimetype="application/json")
+    else:
+        payload = read_profile(Connection(), actor_id, app_name)
+        resp = Response(json.dumps(payload), status=200, mimetype="application/json")
+    return resp

@@ -46,3 +46,4 @@ class Messages:
     ADD_PROFILE_SUCCESS = "Successfully added details for: "
     ADD_PROFILE_FAILED = "Unable to add details for: "
     ACTOR_VALIDATION_FAILED = "User name or password incorrect/ mismatched"
+    ADD_PROFILE_NAME_TAKEN = "Application name is already present: "
