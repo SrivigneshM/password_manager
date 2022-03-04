@@ -145,3 +145,31 @@ def read_profile(conn, actor_id, app_name):
         "remarks": profile[12],
     }
     return profile_dict
+
+
+def update_profile(conn, profile):
+    """
+    Update an existing profile in the profile table
+    :param conn:
+    :param profile:
+    """
+    try:
+        sql = """ UPDATE profile
+                  SET user_id = ?,
+                      user_name = ?,
+                      password = ?,
+                      password_expiry = ?,
+                      crn = ?,
+                      profile_password = ?,
+                      url = ?,
+                      is_active = ?,
+                      customer_care_number = ?,
+                      remarks = ?
+                  WHERE app_name = ? """
+        cur = conn.cursor()
+        cur.execute(sql, profile)
+        conn.commit()
+    except Error as e:
+        repr(e)
+        return False
+    return True
