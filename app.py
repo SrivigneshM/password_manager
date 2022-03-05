@@ -1,30 +1,18 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template
 
-from dao.db_access import Connection, create_actor
-from utils.constants import Actor, Messages, project_root
+from utils.constants import project_root
+from views.actor import api_blueprint as actor_api_blueprint
+from views.profile import api_blueprint as profile_api_blueprint
 
 app = Flask(__name__, template_folder=project_root)
+
+app.register_blueprint(actor_api_blueprint)
+app.register_blueprint(profile_api_blueprint)
 
 
 @app.route("/", methods=["GET"])
 def home():
     return render_template("templates/home.html")
-
-
-@app.route("/signup", methods=["POST", "GET"])
-def signup():
-    if request.method == "POST":
-        password = request.form["password"]
-        salt = "random"
-        name = request.form["name"]
-        email = request.form["email"]
-        mobile = request.form["mobile"]
-        actor = Actor(password, salt, name, email, mobile)
-        actor_id = create_actor(Connection(), actor)
-        message = f"{Messages.SIGNUP_SUCCESS}{name}!"
-        if actor_id < 0:
-            message = f"{Messages.SIGNUP_FAILED}{name}!"
-        return message
 
 
 if __name__ == "__main__":
