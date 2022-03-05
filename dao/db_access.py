@@ -173,3 +173,19 @@ def update_profile(conn, profile):
         repr(e)
         return False
     return True
+
+
+def read_apps_list(conn, actor_id):
+    """
+    Query profiles by actor_id
+    :param conn: the Connection object
+    :param actor_id: actor id
+    :return: apps_list
+    """
+    cur = conn.cursor()
+    cur.execute("SELECT app_name FROM profile WHERE actor_id=?", (actor_id,))
+
+    rows = cur.fetchall()
+
+    apps_list = [row[0] for row in rows]
+    return apps_list

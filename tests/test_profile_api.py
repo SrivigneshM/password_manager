@@ -162,3 +162,15 @@ def test_update_profile_failure(create_actor, create_profile_table):
     resp = client.put("/add_profile", data=form_data)
     assert resp.status_code == 400
     assert resp.data == b"Unable to update details for: swissbank!"
+
+
+def test_get_apps_list(create_actor, create_profile_table):
+    client = app.test_client()
+    form_data = dict(
+        actor_name="tester",
+        actor_password="abc123$%^",
+    )
+    resp = client.get("/get_apps_list", data=form_data)
+    payload = json.loads(resp.data)
+    assert resp.status_code == 200
+    assert payload.get("apps_list") == ["swissbank"]
