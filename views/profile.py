@@ -88,7 +88,7 @@ def add_profile():
     return message, response_code
 
 
-@api_blueprint.route("/read_profile", methods=["GET"])
+@api_blueprint.route("/read_profile", methods=["POST"])
 def get_profile():
     actor_name = request.form.get(Fields.ACTOR_NAME, None)
     actor_password = request.form.get(Fields.ACTOR_PASSWORD, None)
@@ -105,7 +105,7 @@ def get_profile():
     return resp
 
 
-@api_blueprint.route("/get_apps_list", methods=["GET"])
+@api_blueprint.route("/get_apps_list", methods=["POST"])
 def get_apps_list():
     actor_name = request.form.get(Fields.ACTOR_NAME, None)
     actor_password = request.form.get(Fields.ACTOR_PASSWORD, None)

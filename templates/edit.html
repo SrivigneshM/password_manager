@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/form_styles.css') }}">
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+  </head>
+   <body>
+     <div class="form-style-8">
+       <h2>View/Update details</h2>
+
+       <form action="" id="edit_details_form">
+
+	     <input type="text" name="actor_name" placeholder="Login Name*" required/>
+	     <input type="password" name="actor_password" placeholder="Login Password*" required/>
+	     <input type="submit" value="read" placeholder="Read"/>
+	     <select name="app_name" id="app_name" onchange="load_edit_pane();"></select>
+
+	     <div id="edit_pane" hidden="true">
+		  <input type="text" id="userid" name="user_id" placeholder="User ID*"/>
+		  <input type="text" id="username" name="user_name" placeholder="User Name" />
+		  <input type="password" id="password" name="password" placeholder="Password*"/>
+		  <input type="date" id="passwordexpiry" name="password_expiry" placeholder="Password Expiry" />
+		  <input type="text" id="crn" name="crn" placeholder="Customer Relationship Number (CRN)" />
+		  <input type="password" id="profilepassword" name="profile_password" placeholder="Profile Password" />
+		  <input type="url" id="url" name="url" placeholder="Website URL" />
+		  <textarea placeholder="Remarks" id="remarks" onkeyup="adjust_textarea(this)"></textarea>
+		  <input type="text" name="is_active" id="active" placeholder="Active profile (Y/N)" onkeyup="validate_active();"/>
+		  <input type="text" name="customer_care_number" id="customercarenumber" placeholder="Customer Care Number" />
+
+		  <input type="button" value="Save" placeholder="Save"/>
+		  <input type ="text" id="showresults" placeholder="Result" readonly>
+		  <input type="button" value="home" placeholder="Home" onclick="render_home();"/>
+	     </div>
+
+       </form>
+
+    <script src="{{ url_for('static',filename='form_actions.js') }}"> </script>
+   </body>
+</html>

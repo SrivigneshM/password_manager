@@ -97,7 +97,7 @@ def test_read_profile(create_actor, create_profile_table):
         actor_password="abc123$%^",
         app_name="swissbank",
     )
-    resp = client.get("/read_profile", data=form_data)
+    resp = client.post("/read_profile", data=form_data)
     profile = json.loads(resp.data)
     assert resp.status_code == 200
     assert profile.get("user_id") == "test_id"
@@ -111,7 +111,7 @@ def test_read_profile_actor_validation_failure(create_profile_table):
         actor_password="abc123$%^",
         app_name="swissbank",
     )
-    resp = client.get("/read_profile", data=form_data)
+    resp = client.post("/read_profile", data=form_data)
     profile = json.loads(resp.data)
     assert resp.status_code == 400
     assert profile.get("message") == "User name or password incorrect/ mismatched!"
@@ -143,7 +143,7 @@ def test_update_profile(create_actor, create_profile_table):
         actor_password="abc123$%^",
         app_name="swissbank",
     )
-    resp = client.get("/read_profile", data=form_data)
+    resp = client.post("/read_profile", data=form_data)
     profile = json.loads(resp.data)
     assert resp.status_code == 200
     assert profile.get("password") == "terces12#$"
@@ -170,7 +170,7 @@ def test_get_apps_list(create_actor, create_profile_table):
         actor_name="tester",
         actor_password="abc123$%^",
     )
-    resp = client.get("/get_apps_list", data=form_data)
+    resp = client.post("/get_apps_list", data=form_data)
     payload = json.loads(resp.data)
     assert resp.status_code == 200
     assert payload.get("apps_list") == ["swissbank"]
