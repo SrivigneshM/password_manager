@@ -1,6 +1,7 @@
 <html>
   <head>
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/form_styles.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel='stylesheet' type='text/css'>
     <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
   </head>
    <body>
@@ -17,7 +18,10 @@
 	     <div id="edit_pane" hidden="true">
 		  <input type="text" id="userid" name="user_id" placeholder="User ID*"/>
 		  <input type="text" id="username" name="user_name" placeholder="User Name" />
-		  <input type="password" id="password" name="password" placeholder="Password*"/>
+		  <div id="password_div">
+		    <input type="password" id="password" name="password" placeholder="Password*"/>
+		    <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+		  </div>
 		  <input type="date" id="passwordexpiry" name="password_expiry" placeholder="Password Expiry" />
 		  <input type="text" id="crn" name="crn" placeholder="Customer Relationship Number (CRN)" />
 		  <input type="password" id="profilepassword" name="profile_password" placeholder="Profile Password" />

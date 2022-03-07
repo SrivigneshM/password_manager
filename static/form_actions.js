@@ -92,6 +92,7 @@ $('form').submit(function (event) {
 		    html += "<option value=" + app  + ">" +app + "</option>"
 		}
 		document.getElementById("app_name").innerHTML = html;
+		load_edit_pane();
 	    } else {
 		$('#showresults').val(data);
 		var result = document.getElementById('showresults');
@@ -107,4 +108,16 @@ $('form').submit(function (event) {
 	    //$('#showresults').slideDown('slow')
 	}
     });
+});
+
+
+$(".toggle-password").click(function() {
+
+  $(this).toggleClass("fa-eye fa-eye-slash");
+  var input = $($(this).attr("toggle"));
+  if (input.attr("type") == "password") {
+    input.attr("type", "text");
+  } else {
+    input.attr("type", "password");
+  }
 });
