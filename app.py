@@ -15,5 +15,15 @@ def home():
     return render_template("templates/home.html")
 
 
+@app.route("/profile", methods=["GET"])
+def profile():
+    return render_template("templates/profile.html")
+
+
+@app.route("/edit_profile", methods=["GET"])
+def edit_profile():
+    return render_template("templates/edit.html")
+
+
 if __name__ == "__main__":
     app.run()

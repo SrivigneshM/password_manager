@@ -64,6 +64,7 @@ EditableProfile = namedtuple(
         Fields.CUSTOMER_CARE_NUMBER,
         Fields.REMARKS,
         Fields.APP_NAME,
+        Fields.ACTOR_ID,
     ],
 )
 
