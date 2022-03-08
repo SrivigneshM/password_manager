@@ -165,7 +165,7 @@ def update_profile(conn, profile):
                       is_active = ?,
                       customer_care_number = ?,
                       remarks = ?
-                  WHERE app_name = ? """
+                  WHERE app_name = ? and actor_id = ? """
         cur = conn.cursor()
         cur.execute(sql, profile)
         conn.commit()

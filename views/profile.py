@@ -60,6 +60,7 @@ def add_profile():
             customer_care_number,
             remarks,
             app_name,
+            actor_id,
         )
         message = f"{Messages.EDIT_PROFILE_SUCCESS}{app_name}!"
         if not update_profile(Connection(), profile):
