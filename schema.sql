@@ -1,5 +1,3 @@
-```sh
-
 CREATE TABLE actor(
    id INTEGER PRIMARY KEY AUTOINCREMENT,
    password TEXT NOT NULL,
@@ -42,5 +40,3 @@ CREATE TABLE card(
    FOREIGN KEY(profile_id) REFERENCES profile(id),
    FOREIGN KEY(actor_id) REFERENCES actor(id)
 );
-
-```

@@ -32,10 +32,11 @@ Invoke the URL from browser http://localhost:5000/
 $ sqlite3
 $ sqlite3 password_manager.db
 $ .open ./password_manager.db
+$ .read schema.sql
 $ .mode column
 $ .header on
 ```
-DB design: click [here](DML.md)
+DB design: click [here](schema.sql)
 
 ## Run pytest
 
