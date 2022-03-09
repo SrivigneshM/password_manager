@@ -66,12 +66,14 @@ function ajax_call(endpoint, method, action) {
 		$('#showresults').val(data);
 		var result = document.getElementById('showresults');
 		result.style.color = "#006400";
+		document.getElementById('showresults').focus();
 	    }
 	},
 	error: function (xhr, status) {
 	    $('#showresults').val(xhr.responseText);
 	    var result = document.getElementById('showresults');
 	    result.style.color = "#FF0000";
+	    document.getElementById('showresults').focus();
 	},
 	complete: function (xhr, status) {
 	    //$('#showresults').slideDown('slow')
