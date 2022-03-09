@@ -19,7 +19,7 @@ $ ./ENV/bin/pip3.7 install -r requirements.txt
 ## Run flask app
 
 ```sh
-$ python3 app.py
+$ python3 src/app.py
 ```
 
 ## Invoke flask app
