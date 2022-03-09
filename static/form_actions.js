@@ -1,4 +1,6 @@
 
+const app_base_url = "http://localhost:5000/";
+
 //auto expand textarea
 function adjust_textarea(h) {
     h.style.height = "20px";
@@ -7,18 +9,18 @@ function adjust_textarea(h) {
 
 
 function render_profile() {
-    window.location.href="http://localhost:5000/profile";
+    window.location.href=app_base_url + "profile";
 }
 
 
 function render_home() {
-    window.location.href="http://localhost:5000/";
+    window.location.href=app_base_url
     return;
 }
 
 
 function render_edit() {
-    window.location.href="http://localhost:5000/edit_profile";
+    window.location.href=app_base_url + "edit_profile";
     return;
 }
 
@@ -83,26 +85,25 @@ function ajax_call(endpoint, method, action) {
 
 
 function load_edit_pane() {
-    ajax_call("http://localhost:5000/read_profile", "POST", "load_edit_pane");
+    ajax_call(app_base_url + "read_profile", "POST", "load_edit_pane");
     $('#edit_pane').show();
 }
 
 
 function update_profile() {
-    ajax_call("http://localhost:5000/add_profile", "PUT", "");
+    ajax_call(app_base_url + "add_profile", "PUT", "");
 }
 
 
 $('form').submit(function (event) {
     event.preventDefault()
     var formID = event.target.id
-    var endpoint = "http://localhost:5000/signup"
-    var method = "POST"
+    var endpoint = app_base_url + "signup";
     var action = ""
     if(formID == "details_form") {
-	endpoint = "http://localhost:5000/add_profile"
+	endpoint = app_base_url + "add_profile";
     } else if(formID == "edit_details_form") {
-	endpoint = "http://localhost:5000/get_apps_list"
+	endpoint = app_base_url + "get_apps_list";
 	action = "load_drop_down"
     }
     ajax_call(endpoint, "POST", action)
