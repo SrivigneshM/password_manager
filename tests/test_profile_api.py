@@ -1,6 +1,6 @@
 import json
 
-from app import app
+from webapps.app import app
 
 
 def test_create_profile(create_actor, create_profile_table):

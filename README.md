@@ -8,19 +8,13 @@ Git repository to maintain python code-base for password management utility
 | [Python](https://docs.python-guide.org/starting/install3/osx/) | 3.7.7   |
 | [sqlite](https://www.sqlite.org/download.html)                 | 3.28.0  |
 
-## Setup sqlite3 database
+## How to run the app?
 
 ```sh
-$ sh setup_db.sh
+$ sh startup.sh
 ```
 
-## Run flask app
-
-```sh
-$ python3 src/app.py
-```
-
-## Invoke flask app
+## How to use the app?
 
 Invoke the URL from browser http://localhost:5000/
 
