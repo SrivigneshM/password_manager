@@ -1,4 +1,4 @@
-include setup_db.sh
+include startup.sh
 include schema.sql
 include requirements.txt
 graft static
