@@ -44,3 +44,16 @@ DB design: click [here](schema.sql)
 $ ./ENV/bin/pip3.7 install -r test-requirements.txt
 $ sh pytest.sh
 ```
+
+## Packaging
+
+```sh
+$ python3 -m pip install --upgrade build
+$ python3 -m build
+```
+
+## Dowload the package
+
+```sh
+$ curl -sSf -u "username:password" -O https://sriv.jfrog.io/artifactory/password-manager-local/simvault-password-manager-1.0.0.tar.gz
+```
