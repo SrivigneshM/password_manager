@@ -44,3 +44,10 @@ DB design: click [here](schema.sql)
 $ ./ENV/bin/pip3.7 install -r test-requirements.txt
 $ sh pytest.sh
 ```
+
+## Packaging
+
+```sh
+$ python3 -m pip install --upgrade build
+$ python3 -m build
+```
