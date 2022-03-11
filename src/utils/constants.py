@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pathlib import Path
 
-project_root = Path(__file__).parent.parent
+project_root = Path(__file__).parent.parent.parent
 
 db_file = Path(f"{project_root}/password_manager.db")
 

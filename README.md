@@ -8,6 +8,16 @@ Git repository to maintain python code-base for password management utility
 | [Python](https://docs.python-guide.org/starting/install3/osx/) | 3.7.7   |
 | [sqlite](https://www.sqlite.org/download.html)                 | 3.28.0  |
 
+## How to run the app?
+
+```sh
+$ sh startup.sh
+```
+
+## How to use the app?
+
+Invoke the URL from browser http://localhost:5000/
+
 ## Setup virtual environment for development
 
 ```sh
@@ -16,30 +26,21 @@ $ . ENV/bin/activate
 $ ./ENV/bin/pip3.7 install -r requirements.txt
 ```
 
-## Run flask app
-
-```sh
-$ python3 app.py
-```
-
-## Invoke flask app
-
-Invoke the URL from browser http://localhost:5000/
-
-## Create and open database
+## Create and open test database
 
 ```sh
 $ sqlite3
-$ sqlite3 password_manager.db
-$ .open ./password_manager.db
+$ sqlite3 test_password_manager.db
+$ .open ./test_password_manager.db
+$ .read schema.sql
 $ .mode column
 $ .header on
 ```
-DB design: click [here](DML.md)
+DB design: click [here](schema.sql)
 
 ## Run pytest
 
 ```sh
 $ ./ENV/bin/pip3.7 install -r test-requirements.txt
-$ sh pytest.sh tests/test_signup_api.py
+$ sh pytest.sh
 ```

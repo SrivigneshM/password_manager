@@ -6,13 +6,14 @@
   </head>
    <body>
      <div class="form-style-8">
-       <h2>View/Update details</h2>
+       <h2><b>SIMVAULT</b> <i>View/Update</i></h2>
 
        <form action="" id="edit_details_form">
 
 	     <input type="text" name="actor_name" placeholder="Login Name*" required/>
 	     <input type="password" name="actor_password" placeholder="Login Password*" required/>
-	     <input type="submit" value="read" placeholder="Read"/>
+	     <input type="submit" value="view" placeholder="View"/>
+	     <input type="button" value="cancel" placeholder="Cancel" onclick="render_home();"/>
 	     <select name="app_name" id="app_name" onchange="load_edit_pane();"></select>
 
 	     <div id="edit_pane" hidden="true">
@@ -30,9 +31,9 @@
 		  <input type="text" name="is_active" id="active" placeholder="Active profile (Y/N)" onkeyup="validate_active();"/>
 		  <input type="text" name="customer_care_number" id="customercarenumber" placeholder="Customer Care Number" />
 
-		  <input type="button" value="Save" placeholder="Save" onclick="update_profile();"/>
+		  <input type="button" value="submit" placeholder="submit" onclick="update_profile();"/>
+		  <input type="button" value="cancel" placeholder="Cancel" onclick="render_home();"/>
 		  <input type ="text" id="showresults" placeholder="Result" readonly>
-		  <input type="button" value="home" placeholder="Home" onclick="render_home();"/>
 	     </div>
 
        </form>

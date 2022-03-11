@@ -1,6 +1,4 @@
-```sh
-
-CREATE TABLE actor(
+CREATE TABLE IF NOT EXISTS actor(
    id INTEGER PRIMARY KEY AUTOINCREMENT,
    password TEXT NOT NULL,
    salt TEXT NOT NULL,
@@ -9,7 +7,7 @@ CREATE TABLE actor(
    mobile TEXT
 );
 
-CREATE TABLE profile(
+CREATE TABLE IF NOT EXISTS profile(
    id INTEGER PRIMARY KEY AUTOINCREMENT,
    actor_id INTEGER,
    app_name TEXT,
@@ -26,7 +24,7 @@ CREATE TABLE profile(
    FOREIGN KEY(actor_id) REFERENCES actor(id)
 );
 
-CREATE TABLE card(
+CREATE TABLE IF NOT EXISTS card(
    id INTEGER PRIMARY KEY AUTOINCREMENT,
    profile_id INTEGER,
    actor_id INTEGER,
@@ -42,5 +40,3 @@ CREATE TABLE card(
    FOREIGN KEY(profile_id) REFERENCES profile(id),
    FOREIGN KEY(actor_id) REFERENCES actor(id)
 );
-
-```

@@ -1,4 +1,4 @@
-from app import app
+from webapps.app import app
 
 
 def test_signup(create_actor_table):
