@@ -11,7 +11,7 @@ Git repository to maintain python code-base for password management utility
 ## How to download, install and run the app?
 
 ```sh
-$ curl -sSf -u "username:password" -O https://sriv.jfrog.io/artifactory/password-manager-local/simvault-password-manager-1.0.0.tar.gz
+$ curl -sSf -u "username:password" -O https://sriv.jfrog.io/artifactory/password-manager-local/simvault-password-manager/1.0.0/simvault-password-manager-1.0.0.tar.gz
 $ tar -xvf simvault-password-manager-1.0.0.tar.gz
 $ cd simvault-password-manager-1.0.0
 $ chmod -R 700 startup.sh
