@@ -1,0 +1,6 @@
+include startup.sh
+include schema.sql
+include requirements.txt
+graft static
+graft templates
+global-exclude *.pyc
