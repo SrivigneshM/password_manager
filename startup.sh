@@ -11,4 +11,4 @@ export PYTHONPATH=$HOME_DIR:$PYTHONBIN:$SRC_DIR
 
 sqlite3 "password_manager.db" ".read schema.sql"
 
-nohup python3 src/webapps/app.py >/dev/null 2>&1 &
+nohup "${PYTHONBIN}"/uwsgi --http :5000 --wsgi-file "${SRC_DIR}"/webapps/app.py --callable app >/dev/null 2>&1 &
