@@ -2,3 +2,4 @@ Flask==0.10.1
 itsdangerous==2.0.1
 twine==3.8.0
 uwsgi==2.0.18
+circus==0.13.0
