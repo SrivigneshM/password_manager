@@ -26,8 +26,8 @@ Invoke the URL from browser http://localhost:5000/
 
 ```sh
 $ python3 -m venv ENV
-$ . ENV/bin/activate
-$ ./ENV/bin/pip3.7 install -r requirements.txt
+$ source ENV/bin/activate
+$ pip3.7 install -r requirements.txt
 ```
 
 ## Create and open test database
@@ -45,7 +45,6 @@ DB design: click [here](schema.sql)
 ## Run pytest
 
 ```sh
-$ ./ENV/bin/pip3.7 install -r test-requirements.txt
 $ sh pytest.sh
 ```
 
@@ -54,5 +53,6 @@ $ sh pytest.sh
 ```sh
 $ python3 -m pip install --upgrade build
 $ python3 -m build
-$ ./ENV/bin/twine upload -r local dist/simvault-password-manager-1.0.0.tar.gz --config-file .pypirc
+$ source ENV/bin/activate
+$ twine upload -r local dist/simvault-password-manager-1.0.0.tar.gz --config-file .pypirc
 ```
