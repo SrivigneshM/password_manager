@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # shellcheck source=env.sh
-. env.sh
+. ./env.sh
 
 # shellcheck disable=SC2006,SC2046,SC2166,SC2050,SC2148
 source ENV/bin/activate

@@ -1,6 +1,8 @@
+include env.sh
 include startup.sh
 include schema.sql
 include requirements.txt
 graft static
 graft templates
+graft circus
 global-exclude *.pyc
