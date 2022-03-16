@@ -1,13 +1,17 @@
 #!/bin/bash
 
-HOME_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-PYTHONBIN=${HOME_DIR}/ENV/bin
-SRC_DIR=${HOME_DIR}/src
-export PYTHONPATH=$HOME_DIR:$PYTHONBIN:$SRC_DIR
+# shellcheck source=env.sh
+. ./env.sh
 
+# shellcheck disable=SC2006,SC2046,SC2166,SC2050,SC2148
+source ENV/bin/activate
+
+pip3 install -r requirements.txt
+pip3 install -r test-requirements.txt
 
 sqlite3 test_password_manager.db ".quit"
-"${PYTHONBIN}"/lockutils-wrapper "${PYTHONBIN}"/pytest "$@"
+
+lockutils-wrapper pytest "$@"
 pytest_exit_code=$?
 rm -rf test_password_manager.db
 if [ ${pytest_exit_code} -eq 0 ]
