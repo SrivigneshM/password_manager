@@ -27,3 +27,13 @@ def signup():
             message = f"{Messages.SIGNUP_FAILED}{name}!"
             response_code = STATUS_BAD_REQUEST
     return message, response_code
+
+
+@api_blueprint.route("/login")
+def login():
+    return "Login"
+
+
+@api_blueprint.route("/logout")
+def logout():
+    return "Logout"

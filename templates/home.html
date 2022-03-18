@@ -1,26 +1,36 @@
-<html>
-  <head>
-    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/form_styles.css') }}">
-    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
-  </head>
-   <body>
-     <div class="form-style-8">
-       <h2><b>SIMVAULT</b> <i>Sign-up</i></h2>
+{% extends "base.html" %}
 
-       <form action="" id="password_form">
+{% block content %}
+<div class="column is-4 is-offset-4">
+    <h3 class="title">Sign Up</h3>
+    <div class="box">
+        <form method="POST" action="">
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="text" name="name" placeholder="Name*" autofocus="" required>
+                </div>
+            </div>
 
-	     <input type="text" name="name" placeholder="User Name*" required/>
-	     <input type="email" name="email" placeholder="Email*" required/>
-	     <input type="text" name="mobile" placeholder="Mobile" />
-	     <input type ="password" name="password" placeholder="Password*" required/>
-	     <input type="submit" value="submit" placeholder="Save"/>
-	     <input type="button" value="cancel" placeholder="Cancel" onclick="render_profile();">
-	     <input type ="text" id="showresults" placeholder="Result" readonly>
-	     <input type="button" value="add" placeholder="Add" onclick="render_profile();"/>
-	     <input id="edit" type="button" value="view" placeholder="View" onclick="render_edit();"/>
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="email" name="email" placeholder="Email*" autofocus="" required>
+                </div>
+            </div>
 
-       </form>
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="text" name="mobile" placeholder="Mobile" autofocus="">
+                </div>
+            </div>
 
-    <script src="{{ url_for('static',filename='form_actions.js') }}"> </script>
-   </body>
-</html>
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="password" name="password" placeholder="Password*">
+                </div>
+            </div>
+
+            <button class="button is-block is-info is-large is-fullwidth" onclick="render_edit();">Sign Up</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

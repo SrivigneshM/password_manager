@@ -1,3 +1,4 @@
+import secrets
 from pathlib import Path
 
 from flask import Flask, render_template
@@ -8,6 +9,7 @@ from views.profile import api_blueprint as profile_api_blueprint
 
 app = Flask(__name__, template_folder=project_root, static_folder=Path(f"{project_root}/static"))
 
+app.config["SECRET_KEY"] = secrets.token_hex(16)
 app.register_blueprint(actor_api_blueprint)
 app.register_blueprint(profile_api_blueprint)
 
