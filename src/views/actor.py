@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint, render_template, request
 
 from dao.db_access import Connection, create_actor, validate_actor
 from utils.constants import STATUS_BAD_REQUEST, STATUS_OK, Actor, Fields, Messages
@@ -6,8 +6,13 @@ from utils.constants import STATUS_BAD_REQUEST, STATUS_OK, Actor, Fields, Messag
 api_blueprint = Blueprint("actor_api", __name__)
 
 
-@api_blueprint.route("/signup", methods=["POST"])
+@api_blueprint.route("/signup")
 def signup():
+    return render_template("signup.html")
+
+
+@api_blueprint.route("/submit_signup")
+def submit_signup():
     response_code = STATUS_OK
     password = request.form.get(Fields.PASSWORD, None)
     salt = "random"
@@ -31,9 +36,9 @@ def signup():
 
 @api_blueprint.route("/login")
 def login():
-    return "Login"
+    return render_template("login.html")
 
 
 @api_blueprint.route("/logout")
 def logout():
-    return "Logout"
+    return render_template("login.html")

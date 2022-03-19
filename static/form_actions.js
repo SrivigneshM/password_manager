@@ -8,14 +8,8 @@ function adjust_textarea(h) {
 }
 
 
-function render_profile() {
-    window.location.href=app_base_url + "profile";
-}
-
-
-function render_home() {
-    window.location.href=app_base_url
-    return;
+function html_url(endpoint) {
+    window.location.href=app_base_url + endpoint;
 }
 
 
