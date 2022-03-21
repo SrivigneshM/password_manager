@@ -59,16 +59,15 @@ function ajax_call(endpoint, method, action) {
 		$('#active').val(obj.is_active);
 		$('#customercarenumber').val(obj.customer_care_number);
             } else {
-		$('#showresults').val(data);
-		var result = document.getElementById('showresults');
-		result.style.color = "#006400";
-		document.getElementById('showresults').focus();
+		html_url('login');
 	    }
 	},
 	error: function (xhr, status) {
-	    $('#showresults').val(xhr.responseText);
 	    var result = document.getElementById('showresults');
-	    result.style.color = "#FF0000";
+	    result.classList.remove('is-hidden');
+	    result.classList.add('is-danger');
+	    var output = "<p>" + xhr.responseText + "</p>"
+	    result.innerHTML = output;
 	    document.getElementById('showresults').focus();
 	},
 	complete: function (xhr, status) {
@@ -114,3 +113,23 @@ $(".toggle-password").click(function() {
     input.attr("type", "password");
   }
 });
+
+
+const tabs = document.querySelectorAll('.tabs li');
+const tabContentBoxes = document.querySelectorAll('#tab-content > div');
+
+tabs.forEach((tab) => {
+  tab.addEventListener('click', () => {
+    tabs.forEach(item => item.classList.remove('is-active'))
+    tab.classList.add('is-active');
+
+    const target = tab.dataset.target;
+    tabContentBoxes.forEach(box => {
+	if (box.getAttribute('id') === target) {
+	  box.classList.remove('is-hidden');
+	} else {
+	  box.classList.add('is-hidden');
+	}
+    });
+  })
+})

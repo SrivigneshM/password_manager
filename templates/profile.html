@@ -1,21 +1,21 @@
 {% extends "base.html" %}
 
-{% block content %}
-<form action="" id="details_form">
 
-<h2 class="title">SIMVAULT <i>Add</i></h2>
+{% block content %}
+<div class="tabs is-toggle is-toggle-rounded is-medium is-boxed">
+  <ul>
+    <li class="is-active" data-target="details"><a>Add</a></li>
+    <li data-target="edit"><a>View</a></li>
+  </ul>
+</div>
+<div id="tab-content">
+<div id="details">
+<form action="" id="details_form">
 
 <div class="field">
   <div class="control">
     <input class="input is-success" type="text" placeholder="Application name" name="app_name" required>
-    <!-- <span class="icon is-small is-left"> -->
-    <!--   <i class="fas fa-user"></i> -->
-    <!-- </span> -->
-    <!-- <span class="icon is-small is-right"> -->
-    <!--   <i class="fas fa-check"></i> -->
-    <!-- </span> -->
   </div>
-  <!-- <p class="help is-success">This application name is available</p> -->
 </div>
 
 <div class="field">
@@ -73,53 +73,14 @@
   </div>
 </div>
 
-<!-- <div class="field"> -->
-<!--   <label class="label">Email</label> -->
-<!--   <div class="control has-icons-left has-icons-right"> -->
-<!--     <input class="input is-danger" type="email" placeholder="Email input" value="hello@"> -->
-<!--     <span class="icon is-small is-left"> -->
-<!--       <i class="fas fa-envelope"></i> -->
-<!--     </span> -->
-<!--     <span class="icon is-small is-right"> -->
-<!--       <i class="fas fa-exclamation-triangle"></i> -->
-<!--     </span> -->
-<!--   </div> -->
-<!--   <p class="help is-danger">This email is invalid</p> -->
-<!-- </div> -->
-
-<!-- <div class="field"> -->
-<!--   <label class="label">Subject</label> -->
-<!--   <div class="control"> -->
-<!--     <div class="select"> -->
-<!--       <select> -->
-<!--         <option>Select dropdown</option> -->
-<!--         <option>With options</option> -->
-<!--       </select> -->
-<!--     </div> -->
-<!--   </div> -->
-<!-- </div> -->
-
 <div class="field">
   <div class="control">
     <label class="checkbox">
       <input type="checkbox" name="is_active">
-      This profile is Active
+      This profile is active
     </label>
   </div>
 </div>
-
-<!-- <div class="field"> -->
-<!--   <div class="control"> -->
-<!--     <label class="radio"> -->
-<!--       <input type="radio" name="question"> -->
-<!--       Yes -->
-<!--     </label> -->
-<!--     <label class="radio"> -->
-<!--       <input type="radio" name="question"> -->
-<!--       No -->
-<!--     </label> -->
-<!--   </div> -->
-<!-- </div> -->
 
 <div class="field is-grouped">
   <div class="control">
@@ -131,4 +92,113 @@
 </div>
 
 </form>
+</div>
+
+<div id="edit" class="is-hidden">
+<form action="" id="edit_form">
+
+<div class="dropdown is-active">
+  <div class="dropdown-trigger">
+    <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+      <span>Dropdown button</span>
+      <span class="icon is-small">
+        <i class="fas fa-angle-down" aria-hidden="true"></i>
+      </span>
+    </button>
+  </div>
+  <div class="dropdown-menu" id="app-name" role="menu" onchange="load_edit_pane();">
+    <div class="dropdown-content">
+      <a href="#" class="dropdown-item">
+        Dropdown item
+      </a>
+      <a class="dropdown-item">
+        Other dropdown item
+      </a>
+      <a href="#" class="dropdown-item is-active">
+        Active dropdown item
+      </a>
+      <a href="#" class="dropdown-item">
+        Other dropdown item
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="field">
+  <div class="control">
+    <input class="input" type="text" placeholder="User ID*" name="user_id" id="userid">
+  </div>
+</div>
+
+<div class="field">
+  <div class="control">
+    <input class="input" type="text" placeholder="User name" name="user_name" id="username">
+  </div>
+</div>
+
+<div class="field">
+    <div class="control">
+	<input class="input" type="password" name="password" placeholder="Password">
+	<span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+    </div>
+</div>
+
+<div class="field">
+    <div class="control">
+	<input class="input" type="text" name="password_expiry" placeholder="Password expiry date" onfocus="(this.type='date')" onblur="(this.type='text')" id="passwordexpiry">
+    </div>
+</div>
+
+<div class="field">
+  <div class="control">
+    <input class="input" type="text" name="crn" placeholder="Customer Relationship Number(CRN)" id="crn">
+  </div>
+</div>
+
+
+<div class="field">
+    <div class="control">
+	<input class="input" type="password" name="profile_password" placeholder="Profile password" id="profilepassword">
+    </div>
+</div>
+
+<div class="field">
+    <div class="control">
+	<input class="input" type="url" name="url" placeholder="Application URL" id="url">
+    </div>
+</div>
+
+<div class="field">
+  <div class="control">
+    <textarea class="textarea" placeholder="Remarks" name="remarks" id="remarks"></textarea>
+  </div>
+</div>
+
+<div class="field">
+  <div class="control">
+    <input class="input" type="text" name="customer_care_number" placeholder="Customer care number" id="customercarenumber">
+  </div>
+</div>
+
+<div class="field">
+  <div class="control">
+    <label class="checkbox">
+      <input type="checkbox" name="is_active">
+      This profile is active
+    </label>
+  </div>
+</div>
+
+<div class="field is-grouped">
+  <div class="control">
+    <button class="button is-link" type="submit">Update</button>
+  </div>
+  <div class="control">
+    <button class="button is-link is-light" onclick="html_url('');">Cancel</button>
+  </div>
+</div>
+</form>
+</div>
+</div>
+
 {% endblock %}
