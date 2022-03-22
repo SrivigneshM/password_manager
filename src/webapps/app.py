@@ -2,9 +2,10 @@ import secrets
 from pathlib import Path
 
 from flask import Flask, render_template
-from flask_login import LoginManager
+from flask_login import LoginManager, current_user, login_required
 
-from utils.constants import User, project_root
+from dao.db_access import Connection, get_user_by_id
+from utils.constants import project_root
 from views.actor import api_blueprint as actor_api_blueprint
 from views.profile import api_blueprint as profile_api_blueprint
 
@@ -25,8 +26,7 @@ login_manager.init_app(app)
 
 @login_manager.user_loader
 def load_user(user_id):
-    # since the user_id is just the primary key of our user table, use it in the query for the user
-    return User.query.get(int(user_id))
+    return get_user_by_id(Connection(), int(user_id))
 
 
 @app.route("/", methods=["GET"])
@@ -34,12 +34,14 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/profile", methods=["GET"])
+@app.route("/profile")
+@login_required
 def profile():
-    return render_template("profile.html")
+    return render_template("profile.html", name=current_user.name)
 
 
 @app.route("/edit_profile", methods=["GET"])
+@login_required
 def edit_profile():
     return render_template("edit.html")
 

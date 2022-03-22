@@ -1,7 +1,7 @@
 import sqlite3
 from sqlite3 import Error
 
-from utils.constants import Singleton, db_file
+from utils.constants import Singleton, User, db_file
 
 
 def create_connection():
@@ -96,6 +96,40 @@ def validate_actor(conn, name, password=None):
         if (password is None) or row[1] == password:
             return row[0]
     return -1
+
+
+def get_user_by_id(conn, actor_id):
+    """
+    Query actor by id
+    :param conn: the Connection object
+    :param name: actor name
+    :param password: actor password
+    :return: user object
+    """
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM actor WHERE id=?", (actor_id,))
+
+    row = cur.fetchone()
+    user = row if row else None
+
+    user_obj = User(user[1], user[2], user[3], user[4], user[5])
+    return user_obj
+
+
+def get_hashed_password(conn, name):
+    """
+    Query actor by name
+
+    :param conn: the Connection object
+    :param name: actor name
+    :return: password
+    """
+    cur = conn.cursor()
+    cur.execute("SELECT id, password FROM actor WHERE name=?", (name,))
+
+    row = cur.fetchone()
+    password = row[1] if row else ""
+    return password
 
 
 def validate_profile(conn, actor_id, app_name):

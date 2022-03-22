@@ -58,7 +58,9 @@ function ajax_call(endpoint, method, action) {
 		$('#remarks').val(obj.remarks);
 		$('#active').val(obj.is_active);
 		$('#customercarenumber').val(obj.customer_care_number);
-            } else {
+            } else if (action == "login") {
+                html_url('profile');
+	    } else {
 		html_url('login');
 	    }
 	},
@@ -93,7 +95,10 @@ $('form').submit(function (event) {
     var formID = event.target.id
     var endpoint = app_base_url + "signup";
     var action = ""
-    if(formID == "details_form") {
+    if (formID == "login_form") {
+	endpoint = app_base_url + "login";
+	action = "login"
+    } else if(formID == "details_form") {
 	endpoint = app_base_url + "add_profile";
     } else if(formID == "edit_details_form") {
 	endpoint = app_base_url + "get_apps_list";

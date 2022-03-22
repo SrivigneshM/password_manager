@@ -1,12 +1,15 @@
 from collections import namedtuple
 from pathlib import Path
 
+from flask_login import UserMixin
+
 project_root = Path(__file__).parent.parent.parent
 
 db_file = Path(f"{project_root}/password_manager.db")
 
 
 class Fields:
+    ID = "id"
     PASSWORD = "password"
     SALT = "salt"
     NAME = "name"
@@ -33,6 +36,12 @@ STATUS_BAD_REQUEST = 400
 Actor = namedtuple(
     "Actor", [Fields.PASSWORD, Fields.SALT, Fields.NAME, Fields.EMAIL, Fields.MOBILE]
 )
+
+
+class User(UserMixin, Actor):
+    pass
+
+
 Profile = namedtuple(
     "Profile",
     [
@@ -87,6 +96,8 @@ class Messages:
     SIGNUP_SUCCESS = "Successfully signed up: "
     SIGNUP_FAILED = "Unable to signup: "
     SIGNUP_NAME_TAKEN = "Name is already taken: "
+    LOGIN_SUCCESS = "Welcome: "
+    LOGIN_FAILED = "Please check your login details and try again"
     ADD_PROFILE_SUCCESS = "Successfully added details for: "
     ADD_PROFILE_FAILED = "Unable to add details for: "
     ACTOR_VALIDATION_FAILED = "User name or password incorrect/ mismatched"
