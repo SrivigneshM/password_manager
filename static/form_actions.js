@@ -60,6 +60,11 @@ function ajax_call(endpoint, method, action) {
 		$('#customercarenumber').val(obj.customer_care_number);
             } else if (action == "login") {
                 html_url('profile');
+	    } else if (action == "add") {
+		var output = "<p style='color:green';>" + data + "</p>"
+		var message = document.getElementById('showresults');
+		message.innerHTML = output;
+		message.focus();
 	    } else {
 		html_url('login');
 	    }
@@ -67,10 +72,9 @@ function ajax_call(endpoint, method, action) {
 	error: function (xhr, status) {
 	    var result = document.getElementById('showresults');
 	    result.classList.remove('is-hidden');
-	    result.classList.add('is-danger');
-	    var output = "<p>" + xhr.responseText + "</p>"
+	    var output = "<p style='color:red';>" + xhr.responseText + "</p>"
 	    result.innerHTML = output;
-	    document.getElementById('showresults').focus();
+	    result.focus();
 	},
 	complete: function (xhr, status) {
 	    //$('#showresults').slideDown('slow')
@@ -100,6 +104,7 @@ $('form').submit(function (event) {
 	action = "login"
     } else if(formID == "details_form") {
 	endpoint = app_base_url + "add_profile";
+	action = "add"
     } else if(formID == "edit_details_form") {
 	endpoint = app_base_url + "get_apps_list";
 	action = "load_drop_down"

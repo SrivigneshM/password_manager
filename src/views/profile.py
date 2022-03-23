@@ -1,6 +1,7 @@
 import json
 
 from flask import Blueprint, Response, request
+from flask_login import current_user, login_required
 
 from dao.db_access import (
     Connection,
@@ -24,10 +25,9 @@ api_blueprint = Blueprint("profile_api", __name__)
 
 
 @api_blueprint.route("/add_profile", methods=["POST", "PUT"])
+@login_required
 def add_profile():
     response_code = STATUS_OK
-    actor_name = request.form.get(Fields.ACTOR_NAME, None)
-    actor_password = request.form.get(Fields.ACTOR_PASSWORD, None)
     app_name = request.form.get(Fields.APP_NAME, None)
     user_id = request.form.get(Fields.USER_ID, None)
     user_name = request.form.get(Fields.USER_NAME, None)
@@ -40,11 +40,8 @@ def add_profile():
     customer_care_number = request.form.get(Fields.CUSTOMER_CARE_NUMBER, None)
     remarks = request.form.get(Fields.REMARKS, None)
 
-    actor_id = validate_actor(Connection(), actor_name, actor_password)
-    if actor_id < 0:
-        message = f"{Messages.ACTOR_VALIDATION_FAILED}!"
-        response_code = STATUS_BAD_REQUEST
-    elif request.method == "POST" and validate_profile(Connection(), actor_id, app_name) > 0:
+    actor_id = validate_actor(Connection(), current_user.name)
+    if request.method == "POST" and validate_profile(Connection(), actor_id, app_name) > 0:
         message = f"{Messages.ADD_PROFILE_NAME_TAKEN}{app_name}!"
         response_code = STATUS_BAD_REQUEST
     elif request.method == "PUT":
