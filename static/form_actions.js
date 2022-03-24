@@ -31,10 +31,10 @@ function validate_active() {
 }
 
 
-function ajax_call(endpoint, method, action) {
+function ajax_call(formID, endpoint, method, action) {
     $.ajax({
 	url: endpoint,
-	data: $('form').serialize(),
+	data: $('#'+formID).serialize(),
 	type: method,
 	dataType: "html",
 	success: function (data) {
@@ -61,10 +61,12 @@ function ajax_call(endpoint, method, action) {
             } else if (action == "login") {
                 html_url('profile');
 	    } else if (action == "add") {
-		var output = "<p style='color:green';>" + data + "</p>"
+		var output = "<p>" + data + "</p>"
 		var message = document.getElementById('showresults');
+	        message.classList.remove('is-danger');
+	        message.classList.add('is-success');
+		message.classList.add('is-focused');
 		message.innerHTML = output;
-		message.focus();
 	    } else {
 		html_url('login');
 	    }
@@ -72,9 +74,10 @@ function ajax_call(endpoint, method, action) {
 	error: function (xhr, status) {
 	    var result = document.getElementById('showresults');
 	    result.classList.remove('is-hidden');
-	    var output = "<p style='color:red';>" + xhr.responseText + "</p>"
+	    result.classList.add('is-danger');
+            result.classList.add('is-focused');
+	    var output = "<p>" + xhr.responseText + "</p>"
 	    result.innerHTML = output;
-	    result.focus();
 	},
 	complete: function (xhr, status) {
 	    //$('#showresults').slideDown('slow')
@@ -84,13 +87,13 @@ function ajax_call(endpoint, method, action) {
 
 
 function load_edit_pane() {
-    ajax_call(app_base_url + "read_profile", "POST", "load_edit_pane");
+    ajax_call("edit_form", app_base_url + "read_profile", "POST", "load_edit_pane");
     $('#edit_pane').show();
 }
 
 
 function update_profile() {
-    ajax_call(app_base_url + "add_profile", "PUT", "");
+    ajax_call("edit_form", app_base_url + "add_profile", "PUT", "");
 }
 
 
@@ -105,11 +108,8 @@ $('form').submit(function (event) {
     } else if(formID == "details_form") {
 	endpoint = app_base_url + "add_profile";
 	action = "add"
-    } else if(formID == "edit_details_form") {
-	endpoint = app_base_url + "get_apps_list";
-	action = "load_drop_down"
     }
-    ajax_call(endpoint, "POST", action)
+    ajax_call(formID, endpoint, "POST", action)
 });
 
 
@@ -141,5 +141,10 @@ tabs.forEach((tab) => {
 	  box.classList.add('is-hidden');
 	}
     });
+    if (target == "edit") {
+	endpoint = app_base_url + "get_apps_list";
+	action = "load_drop_down"
+	ajax_call("details_form", endpoint, "POST", action);
+    }
   })
 })
