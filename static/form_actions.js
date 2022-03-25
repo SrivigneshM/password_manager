@@ -63,11 +63,12 @@ function ajax_call(formID, endpoint, method, action) {
 		$('#customercarenumber').val(obj.customer_care_number);
             } else if (action == "login") {
                 html_url('profile');
-	    } else if (action == "add") {
-		var output = "<p>" + data + "</p>"
+	    } else if (action == "add" || action == "update") {
 		var message = document.getElementById('showresults');
+                message.classList.remove('is-hidden');
 	        message.classList.remove('is-danger');
 	        message.classList.add('is-success');
+		var output = "<p>" + data + "</p>"
 		message.innerHTML = output;
                 scroll_up();
 	    } else {
@@ -77,8 +78,8 @@ function ajax_call(formID, endpoint, method, action) {
 	error: function (xhr, status) {
 	    var result = document.getElementById('showresults');
 	    result.classList.remove('is-hidden');
+	    result.classList.remove('is-success');
 	    result.classList.add('is-danger');
-            result.classList.add('is-focused');
 	    var output = "<p>" + xhr.responseText + "</p>"
 	    result.innerHTML = output;
             scroll_up();
@@ -105,15 +106,11 @@ function load_edit_pane() {
 }
 
 
-function update_profile() {
-    ajax_call("edit_form", app_base_url + "add_profile", "PUT", "");
-}
-
-
 $('form').submit(function (event) {
     event.preventDefault()
     var formID = event.target.id
     var endpoint = app_base_url + "signup";
+    var method = "POST"
     var action = ""
     if (formID == "login_form") {
 	endpoint = app_base_url + "login";
@@ -121,8 +118,12 @@ $('form').submit(function (event) {
     } else if(formID == "details_form") {
 	endpoint = app_base_url + "add_profile";
 	action = "add"
+    } else if(formID == "edit_form") {
+	endpoint = app_base_url + "add_profile";
+	action = "update"
+	method = "PUT"
     }
-    ajax_call(formID, endpoint, "POST", action)
+    ajax_call(formID, endpoint, method, action)
 });
 
 
