@@ -56,7 +56,10 @@ function ajax_call(formID, endpoint, method, action) {
 		$('#profilepassword').val(obj.profile_password);
 		$('#url').val(obj.url);
 		$('#remarks').val(obj.remarks);
-		$('#active').val(obj.is_active);
+		$('#is_active').prop('checked', false);
+                if (obj.is_active == 'on') {
+		    $('#is_active').prop('checked', true);
+		}
 		$('#customercarenumber').val(obj.customer_care_number);
             } else if (action == "login") {
                 html_url('profile');
@@ -65,8 +68,8 @@ function ajax_call(formID, endpoint, method, action) {
 		var message = document.getElementById('showresults');
 	        message.classList.remove('is-danger');
 	        message.classList.add('is-success');
-		message.classList.add('is-focused');
 		message.innerHTML = output;
+                scroll_up();
 	    } else {
 		html_url('login');
 	    }
@@ -78,10 +81,20 @@ function ajax_call(formID, endpoint, method, action) {
             result.classList.add('is-focused');
 	    var output = "<p>" + xhr.responseText + "</p>"
 	    result.innerHTML = output;
+            scroll_up();
 	},
 	complete: function (xhr, status) {
 	    //$('#showresults').slideDown('slow')
 	}
+    });
+}
+
+
+function scroll_up() {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
     });
 }
 

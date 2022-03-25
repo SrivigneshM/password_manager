@@ -36,7 +36,7 @@ def add_profile():
     crn = request.form.get(Fields.CRN, None)
     profile_password = request.form.get(Fields.PROFILE_PASSWORD, None)
     url = request.form.get(Fields.URL, None)
-    is_active = request.form.get(Fields.IS_ACTIVE, None)
+    is_active = request.form.get(Fields.IS_ACTIVE, "off")
     customer_care_number = request.form.get(Fields.CUSTOMER_CARE_NUMBER, None)
     remarks = request.form.get(Fields.REMARKS, None)
 
