@@ -38,3 +38,16 @@ def test_signup_duplicate_name(create_actor_table, create_actor):
     resp = client.post("/signup", data=form_data)
     assert resp.status_code == 400
     assert resp.data == b"Name is already taken: tester!"
+
+
+def test_login(create_actor, client):
+    form_data = dict(
+        name="tester",
+        email="tester@pwdmgr.com",
+        mobile="9876543210",
+        password="abc123$%^",
+        remember="true",
+    )
+    resp = client.post("/login", data=form_data)
+    assert resp.status_code == 200
+    assert resp.data == b"Welcome: tester!"

@@ -158,7 +158,7 @@ tabs.forEach((tab) => {
     if (target == "edit") {
 	endpoint = app_base_url + "get_apps_list";
 	action = "load_drop_down"
-	ajax_call("details_form", endpoint, "POST", action);
+	ajax_call("details_form", endpoint, "GET", action);
     }
   })
 })

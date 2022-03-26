@@ -96,7 +96,7 @@ def get_profile():
     return resp
 
 
-@api_blueprint.route("/get_apps_list", methods=["POST"])
+@api_blueprint.route("/get_apps_list")
 @login_required
 def get_apps_list():
     actor_id = validate_actor(Connection(), current_user.name)

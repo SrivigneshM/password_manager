@@ -3,7 +3,8 @@ from pathlib import Path
 import pytest
 
 from dao import db_access
-from utils.constants import Actor, project_root
+from utils.constants import project_root
+from webapps.app import app
 
 
 @pytest.fixture(scope="function")
@@ -25,9 +26,35 @@ def create_actor_table(mock_db_file):
 
 
 @pytest.fixture()
-def create_actor(create_actor_table):
-    actor = Actor("abc123$%^", "random", "tester", "tester@pwdmgr.com", "1234567890")
-    db_access.create_actor(db_access.Connection(), actor)
+def create_actor(create_actor_table, client):
+    form_data = dict(
+        name="tester",
+        email="tester@pwdmgr.com",
+        mobile="9876543210",
+        password="abc123$%^",
+    )
+    client.post("/signup", data=form_data)
+
+
+@pytest.fixture()
+def login_actor(create_actor, client):
+    form_data = dict(
+        name="tester",
+        email="tester@pwdmgr.com",
+        mobile="9876543210",
+        password="abc123$%^",
+    )
+    client.post("/login", data=form_data)
+
+
+@pytest.fixture()
+def logout_actor(client):
+    client.get("/logout")
+
+
+@pytest.fixture()
+def client():
+    return app.test_client()
 
 
 @pytest.fixture()

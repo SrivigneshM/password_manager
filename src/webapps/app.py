@@ -20,7 +20,7 @@ app.register_blueprint(actor_api_blueprint)
 app.register_blueprint(profile_api_blueprint)
 
 login_manager = LoginManager()
-login_manager.login_view = "actor.login"
+login_manager.login_view = "actor_api.login"
 login_manager.init_app(app)
 
 
