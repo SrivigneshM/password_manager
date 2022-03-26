@@ -42,7 +42,7 @@ function ajax_call(formID, endpoint, method, action) {
 		html = "";
 		obj = JSON.parse(data)
 		for(const app of obj.apps_list) {
-		    html += "<option value=" + app  + ">" +app + "</option>"
+		    html += "<option value='" + app  + "'>" +app + "</option>"
 		}
 		document.getElementById("app_name").innerHTML = html;
 		load_edit_pane();
