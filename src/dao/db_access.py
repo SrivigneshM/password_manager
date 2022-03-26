@@ -112,7 +112,7 @@ def get_user_by_id(conn, actor_id):
     row = cur.fetchone()
     user = row if row else None
 
-    user_obj = User(user[1], user[2], user[3], user[4], user[5])
+    user_obj = User("", "", user[3], user[4], user[5])
     return user_obj
 
 
