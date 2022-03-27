@@ -1,13 +1,8 @@
 import json
 
-from webapps.app import app
 
-
-def test_create_profile(create_actor, create_profile_table):
-    client = app.test_client()
+def test_create_profile(client, login_actor, create_profile_table):
     form_data = dict(
-        actor_name="tester",
-        actor_password="abc123$%^",
         app_name="swissbank",
         user_id="test_id",
         user_name="tester",
@@ -25,11 +20,8 @@ def test_create_profile(create_actor, create_profile_table):
     assert resp.data == b"Successfully added details for: swissbank!"
 
 
-def test_create_profile_failure(create_actor, create_profile_table):
-    client = app.test_client()
+def test_create_profile_failure(client, login_actor, create_profile_table):
     form_data = dict(
-        actor_name="tester",
-        actor_password="abc123$%^",
         app_name="scotlandbank",
         user_id="test_id",
         user_name="tester",
@@ -46,11 +38,8 @@ def test_create_profile_failure(create_actor, create_profile_table):
     assert resp.data == b"Unable to add details for: scotlandbank!"
 
 
-def test_create_profile_actor_validation_failure(create_profile_table):
-    client = app.test_client()
+def test_create_profile_actor_validation_failure(client, logout_actor, create_profile_table):
     form_data = dict(
-        actor_name="hacker",
-        actor_password="abc123$%^",
         app_name="swissbank",
         user_id="test_id",
         user_name="tester",
@@ -64,15 +53,11 @@ def test_create_profile_actor_validation_failure(create_profile_table):
         remarks="Account details are saved in the secret vault",
     )
     resp = client.post("/add_profile", data=form_data)
-    assert resp.status_code == 400
-    assert resp.data == b"User name or password incorrect/ mismatched!"
+    assert resp.status_code == 302
 
 
-def test_create_profile_app_validation_failure(create_actor, create_profile_table):
-    client = app.test_client()
+def test_create_profile_app_validation_failure(client, login_actor, create_profile_table):
     form_data = dict(
-        actor_name="tester",
-        actor_password="abc123$%^",
         app_name="swissbank",
         user_id="test_id",
         user_name="tester",
@@ -90,11 +75,8 @@ def test_create_profile_app_validation_failure(create_actor, create_profile_tabl
     assert resp.data == b"Application name is already present: swissbank!"
 
 
-def test_read_profile(create_actor, create_profile_table):
-    client = app.test_client()
+def test_read_profile(client, login_actor, create_profile_table):
     form_data = dict(
-        actor_name="tester",
-        actor_password="abc123$%^",
         app_name="swissbank",
     )
     resp = client.post("/read_profile", data=form_data)
@@ -104,24 +86,16 @@ def test_read_profile(create_actor, create_profile_table):
     assert profile.get("url") == "https://swissb.com"
 
 
-def test_read_profile_actor_validation_failure(create_profile_table):
-    client = app.test_client()
+def test_read_profile_actor_validation_failure(client, logout_actor, create_profile_table):
     form_data = dict(
-        actor_name="hacker",
-        actor_password="abc123$%^",
         app_name="swissbank",
     )
     resp = client.post("/read_profile", data=form_data)
-    profile = json.loads(resp.data)
-    assert resp.status_code == 400
-    assert profile.get("message") == "User name or password incorrect/ mismatched!"
+    assert resp.status_code == 302
 
 
-def test_update_profile(create_actor, create_profile_table):
-    client = app.test_client()
+def test_update_profile(client, login_actor, create_profile_table):
     form_data = dict(
-        actor_name="tester",
-        actor_password="abc123$%^",
         user_id="test_id",
         user_name="tester",
         password="terces12#$",
@@ -139,8 +113,6 @@ def test_update_profile(create_actor, create_profile_table):
     assert resp.data == b"Successfully updated details for: swissbank!"
 
     form_data = dict(
-        actor_name="tester",
-        actor_password="abc123$%^",
         app_name="swissbank",
     )
     resp = client.post("/read_profile", data=form_data)
@@ -150,11 +122,8 @@ def test_update_profile(create_actor, create_profile_table):
     assert profile.get("profile_password") == "terces)(87"
 
 
-def test_update_profile_failure(create_actor, create_profile_table):
-    client = app.test_client()
+def test_update_profile_failure(client, login_actor, create_profile_table):
     form_data = dict(
-        actor_name="tester",
-        actor_password="abc123$%^",
         user_id="test_id",
         crn=234,
         app_name="swissbank",
@@ -164,13 +133,8 @@ def test_update_profile_failure(create_actor, create_profile_table):
     assert resp.data == b"Unable to update details for: swissbank!"
 
 
-def test_get_apps_list(create_actor, create_profile_table):
-    client = app.test_client()
-    form_data = dict(
-        actor_name="tester",
-        actor_password="abc123$%^",
-    )
-    resp = client.post("/get_apps_list", data=form_data)
+def test_get_apps_list(client, login_actor, create_profile_table):
+    resp = client.get("/get_apps_list")
     payload = json.loads(resp.data)
     assert resp.status_code == 200
     assert payload.get("apps_list") == ["swissbank"]

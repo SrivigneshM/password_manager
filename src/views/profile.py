@@ -1,6 +1,7 @@
 import json
 
 from flask import Blueprint, Response, request
+from flask_login import current_user, login_required
 
 from dao.db_access import (
     Connection,
@@ -24,10 +25,9 @@ api_blueprint = Blueprint("profile_api", __name__)
 
 
 @api_blueprint.route("/add_profile", methods=["POST", "PUT"])
+@login_required
 def add_profile():
     response_code = STATUS_OK
-    actor_name = request.form.get(Fields.ACTOR_NAME, None)
-    actor_password = request.form.get(Fields.ACTOR_PASSWORD, None)
     app_name = request.form.get(Fields.APP_NAME, None)
     user_id = request.form.get(Fields.USER_ID, None)
     user_name = request.form.get(Fields.USER_NAME, None)
@@ -36,15 +36,12 @@ def add_profile():
     crn = request.form.get(Fields.CRN, None)
     profile_password = request.form.get(Fields.PROFILE_PASSWORD, None)
     url = request.form.get(Fields.URL, None)
-    is_active = request.form.get(Fields.IS_ACTIVE, None)
+    is_active = request.form.get(Fields.IS_ACTIVE, "off")
     customer_care_number = request.form.get(Fields.CUSTOMER_CARE_NUMBER, None)
     remarks = request.form.get(Fields.REMARKS, None)
 
-    actor_id = validate_actor(Connection(), actor_name, actor_password)
-    if actor_id < 0:
-        message = f"{Messages.ACTOR_VALIDATION_FAILED}!"
-        response_code = STATUS_BAD_REQUEST
-    elif request.method == "POST" and validate_profile(Connection(), actor_id, app_name) > 0:
+    actor_id = validate_actor(Connection(), current_user.name)
+    if request.method == "POST" and validate_profile(Connection(), actor_id, app_name) > 0:
         message = f"{Messages.ADD_PROFILE_NAME_TAKEN}{app_name}!"
         response_code = STATUS_BAD_REQUEST
     elif request.method == "PUT":
@@ -90,33 +87,19 @@ def add_profile():
 
 
 @api_blueprint.route("/read_profile", methods=["POST"])
+@login_required
 def get_profile():
-    actor_name = request.form.get(Fields.ACTOR_NAME, None)
-    actor_password = request.form.get(Fields.ACTOR_PASSWORD, None)
     app_name = request.form.get(Fields.APP_NAME, None)
-    actor_id = validate_actor(Connection(), actor_name, actor_password)
-    if actor_id < 0:
-        payload = {"message": f"{Messages.ACTOR_VALIDATION_FAILED}!"}
-        resp = Response(
-            json.dumps(payload), status=STATUS_BAD_REQUEST, mimetype="application/json"
-        )
-    else:
-        payload = read_profile(Connection(), actor_id, app_name)
-        resp = Response(json.dumps(payload), status=STATUS_OK, mimetype="application/json")
+    actor_id = validate_actor(Connection(), current_user.name)
+    payload = read_profile(Connection(), actor_id, app_name)
+    resp = Response(json.dumps(payload), status=STATUS_OK, mimetype="application/json")
     return resp
 
 
-@api_blueprint.route("/get_apps_list", methods=["POST"])
+@api_blueprint.route("/get_apps_list")
+@login_required
 def get_apps_list():
-    actor_name = request.form.get(Fields.ACTOR_NAME, None)
-    actor_password = request.form.get(Fields.ACTOR_PASSWORD, None)
-    actor_id = validate_actor(Connection(), actor_name, actor_password)
-    if actor_id < 0:
-        payload = {"message": f"{Messages.ACTOR_VALIDATION_FAILED}!"}
-        resp = Response(
-            json.dumps(payload), status=STATUS_BAD_REQUEST, mimetype="application/json"
-        )
-    else:
-        payload = {"apps_list": read_apps_list(Connection(), actor_id)}
-        resp = Response(json.dumps(payload), status=STATUS_OK, mimetype="application/json")
+    actor_id = validate_actor(Connection(), current_user.name)
+    payload = {"apps_list": read_apps_list(Connection(), actor_id)}
+    resp = Response(json.dumps(payload), status=STATUS_OK, mimetype="application/json")
     return resp

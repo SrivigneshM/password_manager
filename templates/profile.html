@@ -1,35 +1,193 @@
-<html>
-  <head>
-    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/form_styles.css') }}">
-    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
-  </head>
-   <body>
-     <div class="form-style-8">
-       <h2><b>SIMVAULT</b> <i>Add</i></h2>
+{% extends "base.html" %}
 
-       <form action="" id="details_form">
 
-	     <input type="text" name="actor_name" placeholder="Login Name*" required/>
-	     <input type="password" name="actor_password" placeholder="Login Password*" required/>
-	     <input type="text" name="app_name" placeholder="Application Name*" required/>
-	     <input type="text" name="user_id" placeholder="User ID*" required/>
-	     <input type="text" name="user_name" placeholder="User Name" />
-	     <input type="password" name="password" placeholder="Password*" required/>
-	     <input type="date" name="password_expiry" placeholder="Password Expiry" />
-	     <input type="text" name="crn" placeholder="Customer Relationship Number (CRN)" />
-	     <input type="password" name="profile_password" placeholder="Profile Password" />
-	     <input type="url" name="url" placeholder="Website URL" />
-	     <textarea name="remarks" placeholder="Remarks" onkeyup="adjust_textarea(this)"></textarea>
-	     <input type="text" name="is_active" id="active" placeholder="Active profile (Y/N)" required onkeyup="validate_active();"/>
-	     <input type="text" name="customer_care_number" placeholder="Customer Care Number" />
+{% block content %}
+<h1 class="title">
+  Welcome, {{ name }}!
+</h1>
 
-	     <input type="submit" value="submit" placeholder="Save"/>
-	     <input id="cancel" type="button" value="cancel" placeholder="Cancel" onclick="render_home();"/>
-	     <input type ="text" id="showresults" placeholder="Result" readonly>
-	     <input id="edit" type="button" value="view" placeholder="View" onclick="render_edit();"/>
+<div class="tabs is-toggle is-toggle-rounded is-medium is-boxed">
+  <ul>
+    <li class="is-active" data-target="details"><a>Add</a></li>
+    <li data-target="edit"><a>View</a></li>
+  </ul>
+</div>
+<div id="tab-content">
+<div class="notification is-hidden" id="showresults">
+  abc
+</div>
+<div id="details">
 
-       </form>
+<form action="" id="details_form">
 
-    <script src="{{ url_for('static',filename='form_actions.js') }}"> </script>
-   </body>
-</html>
+<div class="field">
+  <div class="control">
+    <input class="input" type="text" placeholder="Application name*" name="app_name" required>
+  </div>
+</div>
+
+<div class="field">
+  <div class="control">
+    <input class="input" type="text" placeholder="User ID*" name="user_id" required>
+  </div>
+</div>
+
+<div class="field">
+  <div class="control">
+    <input class="input" type="text" placeholder="User name" name="user_name">
+  </div>
+</div>
+
+<div class="field">
+    <div class="control">
+	<input class="input" type="password" name="password" placeholder="Password*" required>
+    </div>
+</div>
+
+<div class="field">
+    <div class="control">
+	<input class="input" type="text" name="password_expiry" placeholder="Password expiry date" onfocus="(this.type='date')" onblur="(this.type='text')">
+    </div>
+</div>
+
+<div class="field">
+  <div class="control">
+    <input class="input" type="text" name="crn" placeholder="Customer Relationship Number(CRN)">
+  </div>
+</div>
+
+
+<div class="field">
+    <div class="control">
+	<input class="input" type="password" name="profile_password" placeholder="Profile password">
+    </div>
+</div>
+
+<div class="field">
+    <div class="control">
+	<input class="input" type="url" name="url" placeholder="Application URL">
+    </div>
+</div>
+
+<div class="field">
+  <div class="control">
+    <textarea class="textarea" placeholder="Remarks" name="remarks"></textarea>
+  </div>
+</div>
+
+<div class="field">
+  <div class="control">
+    <input class="input" type="text" name="customer_care_number" placeholder="Customer care number">
+  </div>
+</div>
+
+<div class="field">
+  <div class="control">
+    <label class="checkbox">
+      <input type="checkbox" name="is_active" checked>
+      This profile is active
+    </label>
+  </div>
+</div>
+
+<div class="field is-grouped">
+  <div class="control">
+    <button class="button is-link" type="submit">Submit</button>
+  </div>
+  <div class="control">
+    <button class="button is-link is-light" onclick="html_url('');">Cancel</button>
+  </div>
+</div>
+
+</form>
+</div>
+
+<div id="edit" class="is-hidden">
+<form action="" id="edit_form">
+
+<div class="field" style="width:100%">
+  <div class="select" style="width:100%">
+      <select name="app_name" id="app_name" onchange="load_edit_pane();" style="width:100%" ></select>
+  </div>
+</div>
+
+<div class="field">
+  <div class="control">
+    <input class="input" type="text" placeholder="User ID*" name="user_id" id="userid">
+  </div>
+</div>
+
+<div class="field">
+  <div class="control">
+    <input class="input" type="text" placeholder="User name" name="user_name" id="username">
+  </div>
+</div>
+
+<div class="field">
+  <div class="control has-icons-right">
+      <input class="input" type="password" name="password" placeholder="Password*" id="password">
+  <span class="icon is-small is-right">
+    <i toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password" style="pointer-events: initial;"></i>
+  <span>
+  </div>
+</div>
+
+<div class="field">
+    <div class="control">
+	<input class="input" type="text" name="password_expiry" placeholder="Password expiry date" onfocus="(this.type='date')" onblur="(this.type='text')" id="passwordexpiry">
+    </div>
+</div>
+
+<div class="field">
+  <div class="control">
+    <input class="input" type="text" name="crn" placeholder="Customer Relationship Number(CRN)" id="crn">
+  </div>
+</div>
+
+
+<div class="field">
+    <div class="control">
+	<input class="input" type="password" name="profile_password" placeholder="Profile password" id="profilepassword">
+    </div>
+</div>
+
+<div class="field">
+    <div class="control">
+	<input class="input" type="url" name="url" placeholder="Application URL" id="url">
+    </div>
+</div>
+
+<div class="field">
+  <div class="control">
+    <textarea class="textarea" placeholder="Remarks" name="remarks" id="remarks"></textarea>
+  </div>
+</div>
+
+<div class="field">
+  <div class="control">
+    <input class="input" type="text" name="customer_care_number" placeholder="Customer care number" id="customercarenumber">
+  </div>
+</div>
+
+<div class="field">
+  <div class="control">
+    <label class="checkbox">
+      <input type="checkbox" name="is_active" id="is_active">
+      This profile is active
+    </label>
+  </div>
+</div>
+
+<div class="field is-grouped">
+  <div class="control">
+    <button class="button is-link" type="submit">Update</button>
+  </div>
+  <div class="control">
+    <button class="button is-link is-light" onclick="html_url('');">Cancel</button>
+  </div>
+</div>
+</form>
+</div>
+</div>
+
+{% endblock %}

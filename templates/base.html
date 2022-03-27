@@ -1,0 +1,59 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SIMVAULT - Password Manager</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel='stylesheet' type='text/css'>
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+</head>
+
+<body>
+    <section class="hero is-primary is-fullheight has-background-info">
+
+        <div class="hero-head">
+            <nav class="navbar is-info">
+                <div class="container">
+                    <div id="navbarMenuHeroA" class="navbar-menu">
+                        <div class="navbar-end">
+                            <a href="javascript:html_url('');" class="navbar-item">
+                                Home
+                            </a>
+			    {% if current_user.is_authenticated %}
+                            <a href="javascript:html_url('profile');" class="navbar-item">
+                                Profile
+                            </a>
+			    {% endif %}
+			    {% if not current_user.is_authenticated %}
+                            <a href="javascript:html_url('login');" class="navbar-item">
+                                Login
+                            </a>
+                            <a href="javascript:html_url('signup');" class="navbar-item">
+                                Sign Up
+                            </a>
+			    {% endif %}
+			    {% if current_user.is_authenticated %}
+                            <a href="javascript:html_url('logout');" class="navbar-item">
+                                Logout
+                            </a>
+			    {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+
+        <div class="hero-body">
+            <div class="container has-text-centered">
+               {% block content %}
+               {% endblock %}
+            </div>
+        </div>
+    </section>
+    <script src="{{ url_for('static',filename='form_actions.js') }}"> </script>
+</body>
+
+</html>
