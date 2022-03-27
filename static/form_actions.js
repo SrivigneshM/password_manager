@@ -13,12 +13,6 @@ function html_url(endpoint) {
 }
 
 
-function render_edit() {
-    window.location.href=app_base_url + "edit_profile";
-    return;
-}
-
-
 function validate_active() {
     var active_value = $('#active').val()
     if (active_value != "Y" && active_value != "N") {
