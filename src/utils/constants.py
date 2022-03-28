@@ -9,7 +9,7 @@ db_file = Path(f"{project_root}/password_manager.db")
 
 
 class Fields:
-    ID = "id"
+    REMEMBER = "remember"
     PASSWORD = "password"
     SALT = "salt"
     NAME = "name"

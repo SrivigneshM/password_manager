@@ -53,7 +53,7 @@ def login_post():
     response_code = STATUS_OK
     password = request.form.get(Fields.PASSWORD, None)
     name = request.form.get(Fields.NAME, None)
-    remember = True if request.form.get("remember") else False
+    remember = True if request.form.get(Fields.REMEMBER) else False
     actor_id = validate_actor(Connection(), name)
     hashed_password = get_hashed_password(Connection(), name)
     if actor_id < 0 or not check_password_hash(hashed_password, password):

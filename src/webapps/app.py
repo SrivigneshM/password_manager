@@ -1,4 +1,5 @@
 import secrets
+from datetime import timedelta
 from pathlib import Path
 
 from flask import Flask, render_template
@@ -16,12 +17,18 @@ app = Flask(
 )
 
 app.config["SECRET_KEY"] = secrets.token_hex(16)
+# Below flag to be tested after setting domain name for the app
+# app.config["REMEMBER_COOKIE_DURATION"] = timedelta(days=2)
+app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(minutes=10)
+# Below flag to be enbled after making the app HTTPS
+# app.config["SESSION_COOKIE_SECURE"] = True
 app.register_blueprint(actor_api_blueprint)
 app.register_blueprint(profile_api_blueprint)
 
 login_manager = LoginManager()
 login_manager.login_view = "actor_api.login"
 login_manager.init_app(app)
+login_manager.session_protection = "strong"
 
 
 @login_manager.user_loader
@@ -38,12 +45,6 @@ def index():
 @login_required
 def profile():
     return render_template("profile.html", name=current_user.name)
-
-
-@app.route("/edit_profile", methods=["GET"])
-@login_required
-def edit_profile():
-    return render_template("edit.html")
 
 
 if __name__ == "__main__":
