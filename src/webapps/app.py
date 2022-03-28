@@ -17,10 +17,11 @@ app = Flask(
 )
 
 app.config["SECRET_KEY"] = secrets.token_hex(16)
-app.config["REMEMBER_COOKIE_DURATION"] = timedelta(days=2)
+# Below flag to be tested after setting domain name for the app
+# app.config["REMEMBER_COOKIE_DURATION"] = timedelta(days=2)
 app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(minutes=10)
-# Below flag to be turned ON after enabling HTTPS
-app.config["SESSION_COOKIE_SECURE"] = False
+# Below flag to be enbled after making the app HTTPS
+# app.config["SESSION_COOKIE_SECURE"] = True
 app.register_blueprint(actor_api_blueprint)
 app.register_blueprint(profile_api_blueprint)
 
