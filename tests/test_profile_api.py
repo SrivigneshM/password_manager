@@ -137,4 +137,4 @@ def test_get_apps_list(client, login_actor, create_profile_table):
     resp = client.get("/get_apps_list")
     payload = json.loads(resp.data)
     assert resp.status_code == 200
-    assert payload.get("apps_list") == ["swissbank"]
+    assert "swissbank" in payload.get("apps_list")
