@@ -84,6 +84,8 @@ def test_read_profile(client, login_actor, create_profile_table):
     assert resp.status_code == 200
     assert profile.get("user_id") == "test_id"
     assert profile.get("url") == "https://swissb.com"
+    assert profile.get("password_iv") is not None
+    assert profile.get("profile_password_iv") is not None
 
 
 def test_read_profile_actor_validation_failure(client, logout_actor, create_profile_table):

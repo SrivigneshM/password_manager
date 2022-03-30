@@ -67,8 +67,8 @@ def create_profile(conn, profile):
     try:
         sql = """ INSERT INTO profile(actor_id, app_name, user_id, user_name,
                   password, password_expiry, crn, profile_password, url,
-                  is_active, customer_care_number, remarks)
-                  VALUES(?,?,?,?,?,?,?,?,?,?,?,?) """
+                  is_active, customer_care_number, remarks, password_iv, profile_password_iv)
+                  VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?) """
         cur = conn.cursor()
         cur.execute(sql, profile)
         conn.commit()
@@ -177,6 +177,8 @@ def read_profile(conn, actor_id, app_name):
         "is_active": profile[10],
         "customer_care_number": profile[11],
         "remarks": profile[12],
+        "password_iv": profile[13],
+        "profile_password_iv": profile[14],
     }
     return profile_dict
 
@@ -202,6 +204,25 @@ def update_profile(conn, profile):
                   WHERE app_name = ? and actor_id = ? """
         cur = conn.cursor()
         cur.execute(sql, profile)
+        conn.commit()
+    except Error as e:
+        repr(e)
+        return False
+    return True
+
+
+def update_profile_password_iv(conn, iv, actor_id, app_name):
+    """
+    Update an profile_password_iv in the profile table
+    :param conn:
+    :param profile:
+    """
+    try:
+        sql = """ UPDATE profile
+                  SET profile_password_iv = ?
+                  WHERE actor_id = ? and app_name = ? """
+        cur = conn.cursor()
+        cur.execute(sql, (iv, actor_id, app_name))
         conn.commit()
     except Error as e:
         repr(e)

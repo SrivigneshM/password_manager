@@ -1,5 +1,6 @@
 import json
 
+from Crypto.Random import get_random_bytes
 from flask import Blueprint, Response, request
 from flask_login import current_user, login_required
 
@@ -9,6 +10,7 @@ from dao.db_access import (
     read_apps_list,
     read_profile,
     update_profile,
+    update_profile_password_iv,
     validate_actor,
     validate_profile,
 )
@@ -63,7 +65,16 @@ def add_profile():
         if not update_profile(Connection(), profile):
             message = f"{Messages.EDIT_PROFILE_FAILED}{app_name}!"
             response_code = STATUS_BAD_REQUEST
+        else:
+            db_profile = read_profile(Connection(), actor_id, app_name)
+            profile_password_iv = db_profile.get("profile_password_iv", None)
+            profile_password = db_profile.get("profile_password", None)
+            if profile_password and (not profile_password_iv):
+                profile_password_iv = str(get_random_bytes(16))
+                update_profile_password_iv(Connection(), profile_password_iv, actor_id, app_name)
     else:
+        password_iv = str(get_random_bytes(16))
+        profile_password_iv = str(get_random_bytes(16)) if profile_password else None
         profile = Profile(
             actor_id,
             app_name,
@@ -77,6 +88,8 @@ def add_profile():
             is_active,
             customer_care_number,
             remarks,
+            password_iv,
+            profile_password_iv,
         )
         profile_id = create_profile(Connection(), profile)
         message = f"{Messages.ADD_PROFILE_SUCCESS}{app_name}!"
