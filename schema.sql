@@ -21,6 +21,8 @@ CREATE TABLE IF NOT EXISTS profile(
    is_active BOOLEAN NOT NULL,
    customer_care_number TEXT,
    remarks VARCHAR(255),
+   password_iv TEXT NOT NULL,
+   profile_password_iv TEXT,
    FOREIGN KEY(actor_id) REFERENCES actor(id)
 );
 

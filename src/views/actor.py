@@ -1,5 +1,10 @@
+import ast
+
+from Crypto.Hash import SHA512
+from Crypto.Protocol.KDF import PBKDF2
+from Crypto.Random import get_random_bytes
 from flask import Blueprint, render_template, request
-from flask_login import login_required, login_user, logout_user
+from flask_login import current_user, login_required, login_user, logout_user
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from dao.db_access import (
@@ -10,6 +15,7 @@ from dao.db_access import (
     validate_actor,
 )
 from utils.constants import STATUS_BAD_REQUEST, STATUS_OK, Actor, Fields, Messages
+from utils.crypto import load_user, unload_user
 
 api_blueprint = Blueprint("actor_api", __name__)
 
@@ -24,7 +30,7 @@ def signup_post():
     response_code = STATUS_OK
     password = request.form.get(Fields.PASSWORD, None)
     hashed = generate_password_hash(password, method="sha256")
-    salt = "random"
+    salt = str(get_random_bytes(16))
     name = request.form.get(Fields.NAME, None)
     email = request.form.get(Fields.EMAIL, None)
     mobile = request.form.get(Fields.MOBILE, None)
@@ -63,6 +69,9 @@ def login_post():
         user = get_user_by_id(Connection(), actor_id)
         if user:
             user.id = actor_id
+            salt = ast.literal_eval(user.salt)
+            key = PBKDF2(password, salt, 32, count=1000000, hmac_hash_module=SHA512)
+            load_user(actor_id, key)
             login_user(user, remember=remember)
         message = f"{Messages.LOGIN_SUCCESS}{name}!"
     return message, response_code
@@ -71,5 +80,7 @@ def login_post():
 @api_blueprint.route("/logout")
 @login_required
 def logout():
+    actor_id = validate_actor(Connection(), current_user.name)
+    unload_user(actor_id)
     logout_user()
     return render_template("index.html")

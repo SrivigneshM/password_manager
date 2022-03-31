@@ -28,6 +28,8 @@ class Fields:
     REMARKS = "remarks"
     ACTOR_NAME = "actor_name"
     ACTOR_PASSWORD = "actor_password"
+    PASSWORD_IV = "password_iv"
+    PROFILE_PASSWORD_IV = "profile_password_iv"
 
 
 STATUS_OK = 200
@@ -57,6 +59,8 @@ Profile = namedtuple(
         Fields.IS_ACTIVE,
         Fields.CUSTOMER_CARE_NUMBER,
         Fields.REMARKS,
+        Fields.PASSWORD_IV,
+        Fields.PROFILE_PASSWORD_IV,
     ],
 )
 EditableProfile = namedtuple(
