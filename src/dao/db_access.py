@@ -112,7 +112,7 @@ def get_user_by_id(conn, actor_id):
     row = cur.fetchone()
     user = row if row else None
 
-    user_obj = User("", "", user[3], user[4], user[5])
+    user_obj = User("", user[2], user[3], user[4], user[5])
     return user_obj
 
 
@@ -211,7 +211,7 @@ def update_profile(conn, profile):
     return True
 
 
-def update_profile_password_iv(conn, iv, actor_id, app_name):
+def update_profile_password_iv(conn, pwd, iv, actor_id, app_name):
     """
     Update an profile_password_iv in the profile table
     :param conn:
@@ -219,10 +219,10 @@ def update_profile_password_iv(conn, iv, actor_id, app_name):
     """
     try:
         sql = """ UPDATE profile
-                  SET profile_password_iv = ?
+                  SET profile_password = ?, profile_password_iv = ?
                   WHERE actor_id = ? and app_name = ? """
         cur = conn.cursor()
-        cur.execute(sql, (iv, actor_id, app_name))
+        cur.execute(sql, (pwd, iv, actor_id, app_name))
         conn.commit()
     except Error as e:
         repr(e)

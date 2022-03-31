@@ -1,4 +1,3 @@
-import ast
 import json
 
 from Crypto.Hash import SHA512
@@ -33,20 +32,11 @@ def test_kdf_idempotent():
 
 
 def test_crypto_profile(client, login_actor, create_profile_table):
-    password = "abc123$%^"
-    salt = get_random_bytes(16)
-    key = PBKDF2(password, salt, 32, count=1000000, hmac_hash_module=SHA512)
-    iv = get_random_bytes(16)
-
-    raw = "secret12#$"
-    aes_cipher = AESCipher(key)
-    cipher_text = aes_cipher.encrypt(raw, iv)
-
     form_data = dict(
         app_name="cryptobank",
         user_id="test_id",
         user_name="tester",
-        password=str(cipher_text),
+        password="abc123$%^",
         password_expiry="2025-01-01",
         crn="234",
         url="https://swissb.com",
@@ -63,27 +53,15 @@ def test_crypto_profile(client, login_actor, create_profile_table):
     resp = client.post("/read_profile", data=form_data)
     profile = json.loads(resp.data)
     assert resp.status_code == 200
-    assert ast.literal_eval(profile.get("password")) == cipher_text
-
-    plain_text = aes_cipher.decrypt(ast.literal_eval(profile.get("password")), iv)
-    assert raw == plain_text
+    assert profile.get("password") == "abc123$%^"
 
 
 def test_profile_pwd_update(client, login_actor, create_profile_table):
-    password = "abc123$%^"
-    salt = get_random_bytes(16)
-    key = PBKDF2(password, salt, 32, count=1000000, hmac_hash_module=SHA512)
-    iv = get_random_bytes(16)
-
-    raw = "secret12#$"
-    aes_cipher = AESCipher(key)
-    cipher_text = aes_cipher.encrypt(raw, iv)
-
     form_data = dict(
         app_name="cryptobank",
         user_id="test_id",
         user_name="tester",
-        password=str(cipher_text),
+        password="abc123$%^",
         password_expiry="2025-01-01",
         crn="234",
         profile_password="secret)(87",
@@ -101,4 +79,5 @@ def test_profile_pwd_update(client, login_actor, create_profile_table):
     resp = client.post("/read_profile", data=form_data)
     profile = json.loads(resp.data)
     assert resp.status_code == 200
-    assert profile.get("profile_password_iv") is not None
+    assert profile.get("password") == "abc123$%^"
+    assert profile.get("profile_password") == "secret)(87"
