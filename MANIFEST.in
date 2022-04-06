@@ -4,5 +4,6 @@ include schema.sql
 include requirements.txt
 graft static
 graft templates
-graft circus
+# graft circus
+graft ssl
 global-exclude *.pyc

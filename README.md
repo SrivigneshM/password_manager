@@ -56,3 +56,11 @@ $ python3 -m build
 $ source ENV/bin/activate
 $ twine upload -r local dist/simvault-password-manager-1.0.0.tar.gz --config-file .pypirc
 ```
+
+
+## Security
+
+```sh
+$ cd ssl
+$ openssl req -x509 -nodes -days 730 -newkey rsa:2048 -keyout simvault.key -out simvault.crt -config req.cnf -sha256
+```
