@@ -8,19 +8,23 @@ Git repository to maintain python code-base for password management utility
 | [Python](https://docs.python-guide.org/starting/install3/osx/) | 3.7.7   |
 | [sqlite](https://www.sqlite.org/download.html)                 | 3.28.0  |
 
-## How to download, install and run the app?
+## Installation:
 
+- Download and run
 ```sh
-$ curl -sSf -u "username:password" -O https://sriv.jfrog.io/artifactory/password-manager-local/simvault-password-manager/1.0.0/simvault-password-manager-1.0.0.tar.gz
-$ tar -xvf simvault-password-manager-1.0.0.tar.gz
-$ cd simvault-password-manager-1.0.0
+$ curl -LSf -u "username:password" -O https://sriv.jfrog.io/artifactory/password-manager-local/simvault-password-manager/2.0.0/simvault-password-manager-2.0.0.tar.gz
+$ tar -xvf simvault-password-manager-2.0.0.tar.gz
+$ cd simvault-password-manager-2.0.0
 $ chmod -R 700 startup.sh
 $ sh startup.sh
 ```
+- Add below line to /etc/hosts file
 
-## How to use the app?
-
-Invoke the URL from browser http://localhost:5000/
+```sh
+127.0.0.1 localhost simvault.com
+```
+- Import ssl/simvault.crt file into your browser's certificate trust store
+- Invoke the URL from browser https://simvault.com:5000/
 
 ## Setup virtual environment for development
 
@@ -54,7 +58,7 @@ $ sh pytest.sh
 $ python3 -m pip install --upgrade build
 $ python3 -m build
 $ source ENV/bin/activate
-$ twine upload -r local dist/simvault-password-manager-1.0.0.tar.gz --config-file .pypirc
+$ twine upload -r local dist/simvault-password-manager-2.0.0.tar.gz --config-file .pypirc
 ```
 
 

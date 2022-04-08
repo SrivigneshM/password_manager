@@ -11,4 +11,4 @@ pip3 install -r requirements.txt
 sqlite3 "password_manager.db" ".read schema.sql"
 
 # circusd --daemon "${HOME_DIR}"/circus/circus.ini
-python3 "${SRC_DIR}"/webapps/app.py
+nohup python3 "${SRC_DIR}"/webapps/app.py >/dev/null 2>&1 &
