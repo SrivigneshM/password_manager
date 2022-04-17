@@ -1,10 +1,11 @@
 import json
+from pathlib import Path
 
 from Crypto.Hash import SHA512
 from Crypto.Protocol.KDF import PBKDF2
 from Crypto.Random import get_random_bytes
 
-from utils.crypto import AESCipher
+from utils.crypto import AESCipher, license_valid
 
 
 def test_crypto_functions_decrypt_later():
@@ -81,3 +82,8 @@ def test_profile_pwd_update(client, login_actor, create_profile_table):
     assert resp.status_code == 200
     assert profile.get("password") == "abc123$%^"
     assert profile.get("profile_password") == "secret)(87"
+
+
+def test_license_valid():
+    valid_crt_file = Path(__file__).parent / "valid.p12"
+    assert license_valid(valid_crt_file, "test123")
