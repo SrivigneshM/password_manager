@@ -1,4 +1,5 @@
 import ast
+import base64
 
 from Crypto.Hash import SHA512
 from Crypto.Protocol.KDF import PBKDF2
@@ -14,8 +15,8 @@ from dao.db_access import (
     get_user_by_id,
     validate_actor,
 )
-from utils.constants import STATUS_BAD_REQUEST, STATUS_OK, Actor, Fields, Messages
-from utils.crypto import load_user, unload_user
+from utils.constants import STATUS_BAD_REQUEST, STATUS_OK, Actor, Fields, Messages, project_root
+from utils.crypto import license_valid, load_user, unload_user
 
 api_blueprint = Blueprint("actor_api", __name__)
 
@@ -62,10 +63,11 @@ def login_post():
     remember = True if request.form.get(Fields.REMEMBER) else False
     actor_id = validate_actor(Connection(), name)
     hashed_password = get_hashed_password(Connection(), name)
+    lp = base64.b64decode("a29uZmlkZW5jaWFs").decode()
     if actor_id < 0 or not check_password_hash(hashed_password, password):
         message = f"{Messages.LOGIN_FAILED}!"
         response_code = STATUS_BAD_REQUEST
-    else:
+    elif license_valid(f"{project_root}/ssl/license.p12", lp):
         user = get_user_by_id(Connection(), actor_id)
         if user:
             user.id = actor_id
@@ -74,6 +76,9 @@ def login_post():
             load_user(actor_id, key)
             login_user(user, remember=remember)
         message = f"{Messages.LOGIN_SUCCESS}{name}!"
+    else:
+        message = f"{Messages.LICENSE_EXPIRED}!"
+        response_code = STATUS_BAD_REQUEST
     return message, response_code
 
 

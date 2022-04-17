@@ -108,3 +108,6 @@ class Messages:
     ADD_PROFILE_NAME_TAKEN = "Application name is already present: "
     EDIT_PROFILE_SUCCESS = "Successfully updated details for: "
     EDIT_PROFILE_FAILED = "Unable to update details for: "
+    LICENSE_EXPIRED = (
+        "License expired, please renew or you can delete password_manager.db to clean-up passwords"
+    )

@@ -1,3 +1,6 @@
+import datetime
+
+import OpenSSL
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad, unpad
 
@@ -30,3 +33,17 @@ def unload_user(actor_id):
 
 def get_instance(actor_id):
     return kdict.get(actor_id, None)
+
+
+def license_valid(license_file, passwd):
+    valid = True
+    try:
+        p12 = OpenSSL.crypto.load_pkcs12(open(license_file, "rb").read(), passwd)
+        x509 = p12.get_certificate()
+        expiry = x509.get_notAfter().decode()
+        now = datetime.datetime.utcnow().strftime("%Y%m%d%H%M%SZ")
+        if expiry < now:
+            valid = False
+    except Exception:
+        valid = False
+    return valid
