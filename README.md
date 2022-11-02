@@ -67,5 +67,6 @@ $ twine upload -r local dist/simvault-password-manager-2.0.0.tar.gz --config-fil
 ```sh
 $ cd ssl
 $ openssl req -x509 -nodes -days 730 -newkey rsa:2048 -keyout simvault.key -out simvault.crt -config req.cnf -sha256
+$ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout license.key -out license.crt
 $ openssl pkcs12 -export -out license.p12 -inkey license.key -in license.crt
 ```
