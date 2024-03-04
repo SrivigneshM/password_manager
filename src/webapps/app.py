@@ -22,7 +22,7 @@ app.config["SECRET_KEY"] = secrets.token_hex(16)
 app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(minutes=10)
 # Below flag to be enbled after making the app HTTPS
 # app.config["SESSION_COOKIE_SECURE"] = True
-app.config["SERVER_NAME"] = "simvault.com:5000"
+app.config["SERVER_NAME"] = "localhost:5000"
 app.register_blueprint(actor_api_blueprint)
 app.register_blueprint(profile_api_blueprint)
 
@@ -49,5 +49,5 @@ def profile():
 
 
 if __name__ == "__main__":
-    context = (f"{project_root}/ssl/simvault.crt", f"{project_root}/ssl/simvault.key")
-    app.run(ssl_context=context)
+    # context = (f"{project_root}/ssl/simvault.crt", f"{project_root}/ssl/simvault.key")
+    app.run()

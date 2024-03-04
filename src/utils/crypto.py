@@ -1,8 +1,8 @@
 import datetime
 
-import OpenSSL
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad, unpad
+from cryptography.hazmat.primitives.serialization import pkcs12
 
 kdict = dict()
 
@@ -38,9 +38,10 @@ def get_instance(actor_id):
 def license_valid(license_file, passwd):
     valid = True
     try:
-        p12 = OpenSSL.crypto.load_pkcs12(open(license_file, "rb").read(), passwd)
-        x509 = p12.get_certificate()
-        expiry = x509.get_notAfter().decode()
+        pvt_key, crt, addnl_crt = pkcs12.load_key_and_certificates(
+            open(license_file, "rb").read(), passwd.encode("UTF-8")
+        )
+        expiry = crt.not_valid_after_utc.strftime("%Y%m%d%H%M%SZ")
         now = datetime.datetime.utcnow().strftime("%Y%m%d%H%M%SZ")
         if expiry < now:
             valid = False

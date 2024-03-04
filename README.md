@@ -12,19 +12,18 @@ Git repository to maintain python code-base for password management utility
 
 - Download and run
 ```sh
-$ curl -LSf -u "username:password" -O https://sriv.jfrog.io/artifactory/password-manager-local/simvault-password-manager/2.0.0/simvault-password-manager-2.0.0.tar.gz
-$ tar -xvf simvault-password-manager-2.0.0.tar.gz
-$ cd simvault-password-manager-2.0.0
+$ curl -LSf -u "username:password" -O https://sriv.jfrog.io/artifactory/password-manager-local/simvault-password-manager/3.0.0/simvault-password-manager-3.0.0.tar.gz
+$ tar -xvf simvault-password-manager-3.0.0.tar.gz
+$ cd simvault-password-manager-3.0.0
 $ chmod -R 700 startup.sh
 $ sh startup.sh
 ```
 - Add below line to /etc/hosts file
 
 ```sh
-127.0.0.1 localhost simvault.com
+127.0.0.1 localhost
 ```
-- Import ssl/simvault.crt file into your browser's certificate trust store
-- Invoke the URL from browser https://simvault.com:5000/
+- Invoke the URL from browser http://localhost:5000/
 
 ## Setup virtual environment for development
 
@@ -58,7 +57,7 @@ $ sh pytest.sh
 $ python3 -m pip install --upgrade build
 $ python3 -m build
 $ source ENV/bin/activate
-$ twine upload -r local dist/simvault-password-manager-2.0.0.tar.gz --config-file .pypirc
+$ twine upload -r local dist/simvault-password-manager-3.0.0.tar.gz --config-file .pypirc
 ```
 
 
