@@ -23,7 +23,7 @@ $ sh startup.sh
 ```sh
 127.0.0.1 localhost
 ```
-- Invoke the URL from browser http://localhost:5000/
+- Invoke the URL from browser http://localhost:5033/
 
 ## Setup virtual environment for development
 
